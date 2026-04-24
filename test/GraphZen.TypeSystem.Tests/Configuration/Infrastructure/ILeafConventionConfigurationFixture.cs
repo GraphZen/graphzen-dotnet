@@ -5,15 +5,14 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Tests.Configuration.Infrastructure
+namespace GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
+
+public interface ILeafConventionConfigurationFixture : ILeafConfigurationFixture
 {
-    public interface ILeafConventionConfigurationFixture : ILeafConfigurationFixture
-    {
-        LeafConventionContext GetContext();
+    LeafConventionContext GetContext();
 
 
-        void ConfigureContextConventionally(SchemaBuilder sb);
+    void ConfigureContextConventionally(SchemaBuilder sb);
 
-        void ConfigureClrContext(SchemaBuilder sb, string parentName);
-    }
+    void ConfigureClrContext(SchemaBuilder sb, string parentName);
 }

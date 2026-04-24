@@ -5,18 +5,15 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.LanguageModel;
 
-
-namespace GraphZen.LanguageModel
+/// <summary>
+///     Executable (operation/fragment) or type system definitions
+///     http://facebook.github.io/graphql/June2018/#Definition
+/// </summary>
+public abstract class DefinitionSyntax : SyntaxNode
 {
-    /// <summary>
-    ///     Executable (operation/fragment) or type system definitions
-    ///     http://facebook.github.io/graphql/June2018/#Definition
-    /// </summary>
-    public abstract class DefinitionSyntax : SyntaxNode
+    protected DefinitionSyntax(SyntaxLocation? location) : base(location)
     {
-        protected DefinitionSyntax(SyntaxLocation? location) : base(location)
-        {
-        }
     }
 }

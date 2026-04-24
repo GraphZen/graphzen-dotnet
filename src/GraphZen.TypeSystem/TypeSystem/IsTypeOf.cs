@@ -6,8 +6,7 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem
-{
-    public delegate bool IsTypeOf<in TObject, in TContext>(TObject value, TContext context, ResolveInfo info)
-        where TContext : GraphQLContext;
-}
+namespace GraphZen.TypeSystem;
+
+public delegate bool IsTypeOf<in TObject, in TContext>(TObject value, TContext context, ResolveInfo info)
+    where TContext : GraphQLContext;

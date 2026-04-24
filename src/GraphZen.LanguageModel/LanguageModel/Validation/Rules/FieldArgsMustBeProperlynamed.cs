@@ -5,14 +5,11 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.LanguageModel.Validation.Rules;
 
-
-namespace GraphZen.LanguageModel.Validation.Rules
+public class FieldArgsMustBeProperlyNamed : DocumentValidationRuleVisitor
 {
-    public class FieldArgsMustBeProperlyNamed : DocumentValidationRuleVisitor
+    public FieldArgsMustBeProperlyNamed(DocumentValidationContext context) : base(context)
     {
-        public FieldArgsMustBeProperlyNamed(DocumentValidationContext context) : base(context)
-        {
-        }
     }
 }

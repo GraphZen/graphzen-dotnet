@@ -7,36 +7,34 @@ using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 using Xunit;
 
+namespace GraphZen.Tests.LanguageModel.Internal;
 
-namespace GraphZen.Tests.LanguageModel.Internal
+public class GraphQLNameTests
 {
-    public class GraphQLNameTests
+    [Theory]
+    [InlineData("", false)]
+    [InlineData("0", false)]
+    [InlineData("_", true)]
+    [InlineData("abc", true)]
+    [InlineData("abc`", false)]
+    [InlineData("0_aa0", false)]
+    [InlineData("_aa0", true)]
+    [InlineData("_aa", true)]
+    [InlineData("aa", true)]
+    [InlineData("a", true)]
+    [InlineData("a`", false)]
+    public void graphql_name_should_match_spec(string name, bool isValid)
     {
-        [Theory]
-        [InlineData("", false)]
-        [InlineData("0", false)]
-        [InlineData("_", true)]
-        [InlineData("abc", true)]
-        [InlineData("abc`", false)]
-        [InlineData("0_aa0", false)]
-        [InlineData("_aa0", true)]
-        [InlineData("_aa", true)]
-        [InlineData("aa", true)]
-        [InlineData("a", true)]
-        [InlineData("a`", false)]
-        public void graphql_name_should_match_spec(string name, bool isValid)
-        {
-            Assert.Equal(isValid, name.IsValidGraphQLName());
-        }
+        Assert.Equal(isValid, name.IsValidGraphQLName());
+    }
 
 
-        public class Foo
-        {
-        }
+    public class Foo
+    {
+    }
 
 
-        public class Bar
-        {
-        }
+    public class Bar
+    {
     }
 }

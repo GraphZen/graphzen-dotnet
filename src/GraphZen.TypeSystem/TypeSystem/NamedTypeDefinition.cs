@@ -11,71 +11,70 @@ using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 using static GraphZen.LanguageModel.SyntaxFactory;
 
-namespace GraphZen.TypeSystem
+namespace GraphZen.TypeSystem;
+
+[DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
+public abstract class NamedTypeDefinition : AnnotatableMemberDefinition, IMutableNamedTypeDefinition
 {
-    [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
-    public abstract class NamedTypeDefinition : AnnotatableMemberDefinition, IMutableNamedTypeDefinition
+    private ConfigurationSource? _clrTypeConfigurationSource;
+    private ConfigurationSource _nameConfigurationSource;
+
+    protected NamedTypeDefinition(TypeIdentity identity, SchemaDefinition schema,
+        ConfigurationSource configurationSource) : base(configurationSource)
     {
-        private ConfigurationSource _nameConfigurationSource;
-        private ConfigurationSource? _clrTypeConfigurationSource;
-
-        protected NamedTypeDefinition(TypeIdentity identity, SchemaDefinition schema,
-            ConfigurationSource configurationSource) : base(configurationSource)
+        Identity = identity;
+        Schema = schema;
+        if (identity.ClrType != null)
         {
-            Identity = identity;
-            Schema = schema;
-            if (identity.ClrType != null)
-            {
-                if (identity.ClrType.TryGetGraphQLNameFromDataAnnotation(out var customName) &&
-                    customName == identity.Name)
-                    _nameConfigurationSource = ConfigurationSource.DataAnnotation;
-                else
-                    _nameConfigurationSource = ConfigurationSource.Convention;
-            }
+            if (identity.ClrType.TryGetGraphQLNameFromDataAnnotation(out var customName) &&
+                customName == identity.Name)
+                _nameConfigurationSource = ConfigurationSource.DataAnnotation;
             else
-            {
-                _nameConfigurationSource = ConfigurationSource.Explicit;
-            }
+                _nameConfigurationSource = ConfigurationSource.Convention;
         }
-
-
-        public TypeIdentity Identity { get; }
-
-        public SchemaDefinition Schema { get; }
-
-        private string DebuggerDisplay => ClrType != null ? $"{Kind}: {Name} ({ClrType.Name})" : $"{Kind}: {Name}";
-
-        public abstract TypeKind Kind { get; }
-
-        public string Name => Identity.Name;
-
-        public bool SetName(string name, ConfigurationSource configurationSource)
+        else
         {
-            if (!configurationSource.Overrides(_nameConfigurationSource)) return false;
-            _nameConfigurationSource = configurationSource;
-            Identity.Name = name;
-            return true;
+            _nameConfigurationSource = ConfigurationSource.Explicit;
         }
-
-        public ConfigurationSource GetNameConfigurationSource() => _nameConfigurationSource;
-
-        public Type? ClrType => Identity.ClrType;
-
-        public virtual bool SetClrType(Type clrType, ConfigurationSource configurationSource)
-        {
-            if (!configurationSource.Overrides(_clrTypeConfigurationSource)) return false;
-            _clrTypeConfigurationSource = configurationSource;
-            Identity.ClrType = clrType;
-            return true;
-        }
-
-        public ConfigurationSource? GetClrTypeConfigurationSource() => _clrTypeConfigurationSource;
-
-
-        public TypeReference GetTypeReference() =>
-            new TypeReference(Identity,
-                ClrType != null ? NamedType(ClrType) : NamedType(Name(Name)));
-
-        public override string ToString() => Name;
     }
+
+
+    public TypeIdentity Identity { get; }
+
+    public SchemaDefinition Schema { get; }
+
+    private string DebuggerDisplay => ClrType != null ? $"{Kind}: {Name} ({ClrType.Name})" : $"{Kind}: {Name}";
+
+    public abstract TypeKind Kind { get; }
+
+    public string Name => Identity.Name;
+
+    public bool SetName(string name, ConfigurationSource configurationSource)
+    {
+        if (!configurationSource.Overrides(_nameConfigurationSource)) return false;
+        _nameConfigurationSource = configurationSource;
+        Identity.Name = name;
+        return true;
+    }
+
+    public ConfigurationSource GetNameConfigurationSource() => _nameConfigurationSource;
+
+    public Type? ClrType => Identity.ClrType;
+
+    public virtual bool SetClrType(Type clrType, ConfigurationSource configurationSource)
+    {
+        if (!configurationSource.Overrides(_clrTypeConfigurationSource)) return false;
+        _clrTypeConfigurationSource = configurationSource;
+        Identity.ClrType = clrType;
+        return true;
+    }
+
+    public ConfigurationSource? GetClrTypeConfigurationSource() => _clrTypeConfigurationSource;
+
+
+    public TypeReference GetTypeReference() =>
+        new(Identity,
+            ClrType != null ? NamedType(ClrType) : NamedType(Name(Name)));
+
+    public override string ToString() => Name;
 }

@@ -5,11 +5,9 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.QueryEngine;
 
-namespace GraphZen.QueryEngine
+public class ExecutionOptions
 {
-    public class ExecutionOptions
-    {
-        public bool ThrowOnError { get; set; }
-    }
+    public bool ThrowOnError { get; set; }
 }

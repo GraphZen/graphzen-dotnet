@@ -6,20 +6,17 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.LanguageModel;
 
-
-namespace GraphZen.LanguageModel
+/// <summary>
+///     Selection
+///     http://facebook.github.io/graphql/June2018/#Selection
+/// </summary>
+public abstract class SelectionSyntax : SyntaxNode, IDirectivesSyntax
 {
-    /// <summary>
-    ///     Selection
-    ///     http://facebook.github.io/graphql/June2018/#Selection
-    /// </summary>
-    public abstract class SelectionSyntax : SyntaxNode, IDirectivesSyntax
+    protected SelectionSyntax(SyntaxLocation? location) : base(location)
     {
-        protected SelectionSyntax(SyntaxLocation? location) : base(location)
-        {
-        }
-
-        public abstract IReadOnlyList<DirectiveSyntax> Directives { get; }
     }
+
+    public abstract IReadOnlyList<DirectiveSyntax> Directives { get; }
 }

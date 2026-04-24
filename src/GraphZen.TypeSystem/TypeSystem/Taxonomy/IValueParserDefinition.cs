@@ -5,10 +5,9 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
+namespace GraphZen.TypeSystem.Taxonomy;
+
+public interface IValueParserDefinition
 {
-    public interface IValueParserDefinition
-    {
-        LeafValueParser<object>? ValueParser { get; }
-    }
+    LeafValueParser<object>? ValueParser { get; }
 }

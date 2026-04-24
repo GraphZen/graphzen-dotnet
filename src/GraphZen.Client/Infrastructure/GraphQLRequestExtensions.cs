@@ -9,24 +9,23 @@ using System.Text.Json;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.Infrastructure
+namespace GraphZen.Infrastructure;
+
+public static class GraphQLRequestExtensions
 {
-    public static class GraphQLRequestExtensions
+    public static HttpRequestMessage ToHttpRequest(this GraphQLRequest request)
     {
-        public static HttpRequestMessage ToHttpRequest(this GraphQLRequest request)
+        Check.NotNull(request, nameof(request));
+        if (request.OperationName == null && request.Query == null)
+            throw new ArgumentException(
+                $"Cannot convert {nameof(GraphQLRequest)} to {nameof(HttpRequestMessage)}: query or operation name required.");
+        var requestJson = JsonSerializer.Serialize(request);
+        var requestJsonContent = new StringContent(requestJson, Encoding.UTF8, "application/json");
+        var message = new HttpRequestMessage
         {
-            Check.NotNull(request, nameof(request));
-            if (request.OperationName == null && request.Query == null)
-                throw new ArgumentException(
-                    $"Cannot convert {nameof(GraphQLRequest)} to {nameof(HttpRequestMessage)}: query or operation name required.");
-            var requestJson = JsonSerializer.Serialize(request);
-            var requestJsonContent = new StringContent(requestJson, Encoding.UTF8, "application/json");
-            var message = new HttpRequestMessage
-            {
-                Method = HttpMethod.Post,
-                Content = requestJsonContent
-            };
-            return message;
-        }
+            Method = HttpMethod.Post,
+            Content = requestJsonContent
+        };
+        return message;
     }
 }

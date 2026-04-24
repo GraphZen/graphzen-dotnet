@@ -7,25 +7,22 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.LanguageModel;
 
-
-namespace GraphZen.LanguageModel
+/// <summary>
+///     Input value
+///     http://facebook.github.io/graphql/June2018/#Value
+/// </summary>
+public abstract class ValueSyntax : SyntaxNode
 {
-    /// <summary>
-    ///     Input value
-    ///     http://facebook.github.io/graphql/June2018/#Value
-    /// </summary>
-    public abstract class ValueSyntax : SyntaxNode
+    protected ValueSyntax(SyntaxLocation? location) : base(location)
     {
-        protected ValueSyntax(SyntaxLocation? location) : base(location)
-        {
-        }
-
-
-        internal static IReadOnlyList<ValueSyntax> EmptyValuesCollection { get; } =
-            Array.AsReadOnly(new ValueSyntax[] { });
-
-
-        public abstract object? GetValue();
     }
+
+
+    internal static IReadOnlyList<ValueSyntax> EmptyValuesCollection { get; } =
+        Array.AsReadOnly(new ValueSyntax[] { });
+
+
+    public abstract object? GetValue();
 }

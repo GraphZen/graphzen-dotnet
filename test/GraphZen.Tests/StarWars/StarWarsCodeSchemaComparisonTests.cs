@@ -8,27 +8,24 @@ using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Xunit;
 
+namespace GraphZen.Tests.StarWars;
 
-
-namespace GraphZen.Tests.StarWars
+[NoReorder]
+public class StarWarsCodeSchemaComparisonTests : StarWarsSchemaAndData
 {
-    [NoReorder]
-    public class StarWarsCodeSchemaComparisonTests : StarWarsSchemaAndData
+    [Fact]
+    public void SdlMatches()
     {
-        [Fact]
-        public void SdlMatches()
-        {
-            string Print(Schema schema) =>
-                schema.ToDocumentSyntax().WithoutBuiltInDefinitions().WithSortedChildren()
-                    .ToSyntaxString();
+        string Print(Schema schema) =>
+            schema.ToDocumentSyntax().WithoutBuiltInDefinitions().WithSortedChildren()
+                .ToSyntaxString();
 
-            var codeFirstSdl = Print(CodeFirstSchema);
-            var schemaBuilderSdl = Print(SchemaBuilderSchema);
-            StringAssert.Equal(codeFirstSdl, schemaBuilderSdl, opt =>
-            {
-                opt.ShowActual = false;
-                opt.ShowExpected = false;
-            });
-        }
+        var codeFirstSdl = Print(CodeFirstSchema);
+        var schemaBuilderSdl = Print(SchemaBuilderSchema);
+        StringAssert.Equal(codeFirstSdl, schemaBuilderSdl, opt =>
+        {
+            opt.ShowActual = false;
+            opt.ShowExpected = false;
+        });
     }
 }

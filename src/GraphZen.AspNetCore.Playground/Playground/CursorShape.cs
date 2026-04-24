@@ -5,12 +5,11 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.Playground
+namespace GraphZen.Playground;
+
+public enum CursorShape
 {
-    public enum CursorShape
-    {
-        Line,
-        Block,
-        Underline
-    }
+    Line,
+    Block,
+    Underline
 }

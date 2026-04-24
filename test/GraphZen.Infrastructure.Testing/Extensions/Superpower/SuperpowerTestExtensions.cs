@@ -7,13 +7,12 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Superpower.Model;
 
-namespace GraphZen.Infrastructure
+namespace GraphZen.Infrastructure;
+
+public static class SuperpowerTestExtensions
 {
-    public static class SuperpowerTestExtensions
+    public static void ThrowOnParserError<TKind, T>(this TokenListParserResult<TKind, T> result)
     {
-        public static void ThrowOnParserError<TKind, T>(this TokenListParserResult<TKind, T> result)
-        {
-            if (!result.HasValue) throw new Exception(result.ToString());
-        }
+        if (!result.HasValue) throw new Exception(result.ToString());
     }
 }

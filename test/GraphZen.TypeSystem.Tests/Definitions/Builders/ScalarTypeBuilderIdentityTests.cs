@@ -7,53 +7,51 @@ using GraphZen.Infrastructure;
 using GraphZen.Internal;
 using JetBrains.Annotations;
 
+namespace GraphZen.TypeSystem.Tests;
 
-namespace GraphZen.TypeSystem.Tests
+[NoReorder]
+public class ScalarTypeBuilderIdentityTests : TypeBuilderIdentityTests<ScalarType>
 {
-    [NoReorder]
-    public class ScalarTypeBuilderIdentityTests : TypeBuilderIdentityTests<ScalarType>
+    public class FooScalar
     {
-        public class FooScalar
-        {
-        }
+    }
 
-        public class BarScalar
-        {
-        }
+    public class BarScalar
+    {
+    }
 
-        public override Type ClrType { get; } = typeof(FooScalar);
-        public override Type NewClrType { get; } = typeof(BarScalar);
+    public override Type ClrType { get; } = typeof(FooScalar);
+    public override Type NewClrType { get; } = typeof(BarScalar);
 
-        public override void CreateTypeWithName(SchemaBuilder schemaBuilder, string name)
-        {
-            schemaBuilder.Scalar(name).ValueParser(Maybe.Some).LiteralParser(Maybe.Some<object>).Serializer(Maybe.Some);
-        }
+    public override void CreateTypeWithName(SchemaBuilder schemaBuilder, string name)
+    {
+        schemaBuilder.Scalar(name).ValueParser(Maybe.Some).LiteralParser(Maybe.Some<object>).Serializer(Maybe.Some);
+    }
 
-        public override void CreateTypeWithClrType(SchemaBuilder schemaBuilder, Type clrType)
-        {
-            schemaBuilder.Scalar(clrType).ValueParser(Maybe.Some).LiteralParser(Maybe.Some<object>)
-                .Serializer(Maybe.Some);
-        }
+    public override void CreateTypeWithClrType(SchemaBuilder schemaBuilder, Type clrType)
+    {
+        schemaBuilder.Scalar(clrType).ValueParser(Maybe.Some).LiteralParser(Maybe.Some<object>)
+            .Serializer(Maybe.Some);
+    }
 
 
-        public override void ChangeNameByName(SchemaBuilder schemaBuilder, string name, string newName)
-        {
-            schemaBuilder.Scalar(name).Name(newName);
-        }
+    public override void ChangeNameByName(SchemaBuilder schemaBuilder, string name, string newName)
+    {
+        schemaBuilder.Scalar(name).Name(newName);
+    }
 
-        public override void ChangeNameByType(SchemaBuilder schemaBuilder, Type clrType, string newName)
-        {
-            schemaBuilder.Scalar(clrType).Name(newName);
-        }
+    public override void ChangeNameByType(SchemaBuilder schemaBuilder, Type clrType, string newName)
+    {
+        schemaBuilder.Scalar(clrType).Name(newName);
+    }
 
-        public override void RemoveNameByName(SchemaBuilder schemaBuilder, string name)
-        {
-            schemaBuilder.Scalar(name).Name(null!);
-        }
+    public override void RemoveNameByName(SchemaBuilder schemaBuilder, string name)
+    {
+        schemaBuilder.Scalar(name).Name(null!);
+    }
 
-        public override void RemoveNameByClrType(SchemaBuilder schemaBuilder, Type clrType)
-        {
-            schemaBuilder.Scalar(clrType).Name(null!);
-        }
+    public override void RemoveNameByClrType(SchemaBuilder schemaBuilder, Type clrType)
+    {
+        schemaBuilder.Scalar(clrType).Name(null!);
     }
 }

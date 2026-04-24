@@ -6,33 +6,30 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.LanguageModel.Validation;
 
-
-namespace GraphZen.LanguageModel.Validation
+public abstract class ValidationRuleVisitor : GraphQLSyntaxVisitor<VisitAction>
 {
-    public abstract class ValidationRuleVisitor : GraphQLSyntaxVisitor<VisitAction>
+    protected ValidationRuleVisitor(ValidationContext context)
     {
-        protected ValidationRuleVisitor(ValidationContext context)
-        {
-            Context = Check.NotNull(context, nameof(context));
-        }
+        Context = Check.NotNull(context, nameof(context));
+    }
 
 
-        protected ValidationContext Context { get; }
+    protected ValidationContext Context { get; }
 
-        public void ReportError(GraphQLServerError error)
-        {
-            Context.ReportError(error);
-        }
+    public void ReportError(GraphQLServerError error)
+    {
+        Context.ReportError(error);
+    }
 
-        public void ReportError(string message, params SyntaxNode[] nodes)
-        {
-            ReportError(new GraphQLServerError(message, nodes));
-        }
+    public void ReportError(string message, params SyntaxNode[] nodes)
+    {
+        ReportError(new GraphQLServerError(message, nodes));
+    }
 
-        public void ReportError(string message, IReadOnlyList<SyntaxNode> nodes)
-        {
-            ReportError(new GraphQLServerError(message, nodes));
-        }
+    public void ReportError(string message, IReadOnlyList<SyntaxNode> nodes)
+    {
+        ReportError(new GraphQLServerError(message, nodes));
     }
 }

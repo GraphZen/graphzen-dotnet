@@ -5,21 +5,18 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.LanguageModel.Internal;
 
-
-namespace GraphZen.LanguageModel.Internal
+public static class Parser
 {
-    public static class Parser
-    {
-        private static readonly IParser Instance = new SuperpowerParser();
+    private static readonly IParser Instance = new SuperpowerParser();
 
 
-        public static DocumentSyntax ParseDocument(string text) => Instance.ParseDocument(text);
+    public static DocumentSyntax ParseDocument(string text) => Instance.ParseDocument(text);
 
 
-        public static ValueSyntax ParseValue(string text) => Instance.ParseValue(text);
+    public static ValueSyntax ParseValue(string text) => Instance.ParseValue(text);
 
 
-        public static TypeSyntax ParseType(string text) => Instance.ParseType(text);
-    }
+    public static TypeSyntax ParseType(string text) => Instance.ParseType(text);
 }

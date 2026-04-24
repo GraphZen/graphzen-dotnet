@@ -8,50 +8,49 @@ using GraphZen.TypeSystem.Taxonomy;
 using GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Tests.Configuration.Objects.Fields.Arguments
+namespace GraphZen.TypeSystem.Tests.Configuration.Objects.Fields.Arguments;
+
+// ReSharper disable once InconsistentNaming
+public abstract class Object_Field_Arguments : NamedCollectionConfigurationFixture<IArguments,
+    IArgumentsDefinition, IMutableArgumentsDefinition, ArgumentDefinition, Argument,
+    FieldDefinition, Field>
 {
-    // ReSharper disable once InconsistentNaming
-    public abstract class Object_Field_Arguments : NamedCollectionConfigurationFixture<IArguments,
-        IArgumentsDefinition, IMutableArgumentsDefinition, ArgumentDefinition, Argument,
-        FieldDefinition, Field>
+    public override void ConfigureParentExplicitly(SchemaBuilder sb, string parentName)
     {
-        public override void ConfigureParentExplicitly(SchemaBuilder sb, string parentName)
-        {
-            sb.Object(Grandparent).Field(parentName, "String");
-        }
+        sb.Object(Grandparent).Field(parentName, "String");
+    }
 
-        public override Field GetParent(Schema schema, string parentName) =>
-            schema.GetObject(Grandparent).GetField(parentName);
+    public override Field GetParent(Schema schema, string parentName) =>
+        schema.GetObject(Grandparent).GetField(parentName);
 
-        public override FieldDefinition GetParent(SchemaBuilder sb, string parentName) =>
-            sb.GetDefinition().GetObject(Grandparent).GetField(parentName);
+    public override FieldDefinition GetParent(SchemaBuilder sb, string parentName) =>
+        sb.GetDefinition().GetObject(Grandparent).GetField(parentName);
 
-        public override void AddItem(SchemaBuilder sb, string parentName, string name)
-        {
-            sb.Object(Grandparent).Field(parentName, f => f.Argument(name, "String"));
-        }
+    public override void AddItem(SchemaBuilder sb, string parentName, string name)
+    {
+        sb.Object(Grandparent).Field(parentName, f => f.Argument(name, "String"));
+    }
 
-        public override void IgnoreItem(SchemaBuilder sb, string parentName, string name)
-        {
-            sb.Object(Grandparent).Field(parentName, f => f.IgnoreArgument(name));
-        }
+    public override void IgnoreItem(SchemaBuilder sb, string parentName, string name)
+    {
+        sb.Object(Grandparent).Field(parentName, f => f.IgnoreArgument(name));
+    }
 
-        public override void UnignoreItem(SchemaBuilder sb, string parentName, string name)
-        {
-            sb.Object(Grandparent).Field(parentName, f => f.UnignoreArgument(name));
-        }
+    public override void UnignoreItem(SchemaBuilder sb, string parentName, string name)
+    {
+        sb.Object(Grandparent).Field(parentName, f => f.UnignoreArgument(name));
+    }
 
-        public override NamedCollection<ArgumentDefinition> GetCollection(FieldDefinition parent) =>
-            parent.Arguments.ToNamedCollection();
+    public override NamedCollection<ArgumentDefinition> GetCollection(FieldDefinition parent) =>
+        parent.Arguments.ToNamedCollection();
 
-        public override NamedCollection<Argument> GetCollection(Field parent) => parent.Arguments.ToNamedCollection();
+    public override NamedCollection<Argument> GetCollection(Field parent) => parent.Arguments.ToNamedCollection();
 
-        public override ConfigurationSource? FindIgnoredItemConfigurationSource(FieldDefinition parent, string name) =>
-            parent.FindIgnoredArgumentConfigurationSource(name);
+    public override ConfigurationSource? FindIgnoredItemConfigurationSource(FieldDefinition parent, string name) =>
+        parent.FindIgnoredArgumentConfigurationSource(name);
 
-        public override void RenameItem(SchemaBuilder sb, string parentName, string name, string newName)
-        {
-            sb.Object(Grandparent).Field(parentName, f => f.Argument(name, arg => arg.Name(newName)));
-        }
+    public override void RenameItem(SchemaBuilder sb, string parentName, string name, string newName)
+    {
+        sb.Object(Grandparent).Field(parentName, f => f.Argument(name, arg => arg.Name(newName)));
     }
 }

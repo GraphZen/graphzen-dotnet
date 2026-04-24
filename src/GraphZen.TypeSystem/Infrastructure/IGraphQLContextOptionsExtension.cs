@@ -6,11 +6,10 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace GraphZen.Infrastructure
+namespace GraphZen.Infrastructure;
+
+public interface IGraphQLContextOptionsExtension
 {
-    public interface IGraphQLContextOptionsExtension
-    {
-        void ApplyServices(IServiceCollection services);
-        void Validate(IGraphQLContextOptions options);
-    }
+    void ApplyServices(IServiceCollection services);
+    void Validate(IGraphQLContextOptions options);
 }

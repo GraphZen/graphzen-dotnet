@@ -6,16 +6,15 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
-{
-    [GraphQLIgnore]
-    public interface IMutableInputValueDefinition : IInputValueDefinition, IMutableAnnotatableDefinition, IMutableNamed,
-        IMutableDescription
-    {
-        new IGraphQLTypeReference? InputType { get; set; }
+namespace GraphZen.TypeSystem.Taxonomy;
 
-        bool SetDefaultValue(object value, ConfigurationSource configurationSource);
-        bool RemoveDefaultValue(ConfigurationSource configurationSource);
-        ConfigurationSource? GetDefaultValueConfigurationSource();
-    }
+[GraphQLIgnore]
+public interface IMutableInputValueDefinition : IInputValueDefinition, IMutableAnnotatableDefinition, IMutableNamed,
+    IMutableDescription
+{
+    new IGraphQLTypeReference? InputType { get; set; }
+
+    bool SetDefaultValue(object value, ConfigurationSource configurationSource);
+    bool RemoveDefaultValue(ConfigurationSource configurationSource);
+    ConfigurationSource? GetDefaultValueConfigurationSource();
 }

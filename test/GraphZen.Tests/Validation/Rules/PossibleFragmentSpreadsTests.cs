@@ -7,13 +7,10 @@ using GraphZen.LanguageModel.Validation;
 using GraphZen.QueryEngine.Validation;
 using JetBrains.Annotations;
 
+namespace GraphZen.Tests.Validation.Rules;
 
-
-namespace GraphZen.Tests.Validation.Rules
+[NoReorder]
+public class PossibleFragmentSpreadsTests : ValidationRuleHarness
 {
-    [NoReorder]
-    public class PossibleFragmentSpreadsTests : ValidationRuleHarness
-    {
-        public override ValidationRule RuleUnderTest { get; } = QueryValidationRules.PossibleFragmentSpreads;
-    }
+    public override ValidationRule RuleUnderTest { get; } = QueryValidationRules.PossibleFragmentSpreads;
 }

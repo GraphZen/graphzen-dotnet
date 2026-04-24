@@ -6,10 +6,9 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
+namespace GraphZen.TypeSystem.Taxonomy;
+
+public interface ILiteralParserDefinition
 {
-    public interface ILiteralParserDefinition
-    {
-        LeafLiteralParser<object, ValueSyntax>? LiteralParser { get; }
-    }
+    LeafLiteralParser<object, ValueSyntax>? LiteralParser { get; }
 }

@@ -6,41 +6,39 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Tests.Configuration.Enums.EnumValues
+namespace GraphZen.TypeSystem.Tests.Configuration.Enums.EnumValues;
+
+// ReSharper disable once InconsistentNaming
+public class Enum_Values_ViaClrEnumValues : Enum_Values, ICollectionConventionConfigurationFixture
 {
-    // ReSharper disable once InconsistentNaming
-    public class Enum_Values_ViaClrEnumValues : Enum_Values, ICollectionConventionConfigurationFixture
+    public enum ExampleEnum
     {
-        public const string DataAnnotationName = nameof(DataAnnotationName);
-
-        public CollectionConventionContext GetContext() =>
-            new CollectionConventionContext
-            {
-                ParentName = nameof(ExampleEnum),
-                ItemNamedByConvention = nameof(ExampleEnum.HelloWorld),
-                ItemNamedByDataAnnotation = DataAnnotationName,
-                ItemIgnoredByConvention = "IgnoredByConvention",
-                ItemIgnoredByDataAnnotation = nameof(ExampleEnum.IgnoredByDataAnnotation)
-            };
-
-        public void ConfigureContextConventionally(SchemaBuilder sb)
-        {
-            sb.Enum<ExampleEnum>();
-        }
-
-        public void ConfigureClrContext(SchemaBuilder sb, string parentName)
-        {
-            sb.Enum(parentName).ClrType<ExampleEnum>();
-        }
-
-
-        public enum ExampleEnum
-        {
-            HelloWorld,
-            [GraphQLName(DataAnnotationName)] NamedByDataAnnotation,
-            [GraphQLIgnore] IgnoredByDataAnnotation
-        }
-
-        public override string ToString() => nameof(Enum_Values_ViaClrEnumValues);
+        HelloWorld,
+        [GraphQLName(DataAnnotationName)] NamedByDataAnnotation,
+        [GraphQLIgnore] IgnoredByDataAnnotation
     }
+
+    public const string DataAnnotationName = nameof(DataAnnotationName);
+
+    public CollectionConventionContext GetContext() =>
+        new()
+        {
+            ParentName = nameof(ExampleEnum),
+            ItemNamedByConvention = nameof(ExampleEnum.HelloWorld),
+            ItemNamedByDataAnnotation = DataAnnotationName,
+            ItemIgnoredByConvention = "IgnoredByConvention",
+            ItemIgnoredByDataAnnotation = nameof(ExampleEnum.IgnoredByDataAnnotation)
+        };
+
+    public void ConfigureContextConventionally(SchemaBuilder sb)
+    {
+        sb.Enum<ExampleEnum>();
+    }
+
+    public void ConfigureClrContext(SchemaBuilder sb, string parentName)
+    {
+        sb.Enum(parentName).ClrType<ExampleEnum>();
+    }
+
+    public override string ToString() => nameof(Enum_Values_ViaClrEnumValues);
 }

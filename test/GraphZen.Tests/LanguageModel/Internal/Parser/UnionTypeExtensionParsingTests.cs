@@ -7,32 +7,30 @@ using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 using Xunit;
 
+namespace GraphZen.Tests.LanguageModel.Internal.Parser;
 
-namespace GraphZen.Tests.LanguageModel.Internal.Parser
+public class UnionTypeExtensionParsingTests : ParserTestBase
 {
-    public class UnionTypeExtensionParsingTests : ParserTestBase
+    [Fact]
+    public void UnionExtendedWithDirective()
     {
-        [Fact]
-        public void UnionExtendedWithDirective()
-        {
-            var result = ParseDocument("extend union Feed @onUnion");
-            var expected = SyntaxFactory.Document(new UnionTypeExtensionSyntax(SyntaxFactory.Name("Feed"),
-                new[] { SyntaxFactory.Directive(SyntaxFactory.Name("onUnion")) }));
-            Assert.Equal(expected, result);
-            Assert.Equal(expected, PrintAndParse(result));
-        }
+        var result = ParseDocument("extend union Feed @onUnion");
+        var expected = SyntaxFactory.Document(new UnionTypeExtensionSyntax(SyntaxFactory.Name("Feed"),
+            new[] { SyntaxFactory.Directive(SyntaxFactory.Name("onUnion")) }));
+        Assert.Equal(expected, result);
+        Assert.Equal(expected, PrintAndParse(result));
+    }
 
-        [Fact]
-        public void UnionWithExtendedTypes()
+    [Fact]
+    public void UnionWithExtendedTypes()
+    {
+        var result = ParseDocument("extend union Feed = Photo | Video");
+        var expected = SyntaxFactory.Document(new UnionTypeExtensionSyntax(SyntaxFactory.Name("Feed"), null, new[]
         {
-            var result = ParseDocument("extend union Feed = Photo | Video");
-            var expected = SyntaxFactory.Document(new UnionTypeExtensionSyntax(SyntaxFactory.Name("Feed"), null, new[]
-            {
-                SyntaxFactory.NamedType(SyntaxFactory.Name("Photo")),
-                SyntaxFactory.NamedType(SyntaxFactory.Name("Video"))
-            }));
-            Assert.Equal(expected, result);
-            Assert.Equal(expected, PrintAndParse(result));
-        }
+            SyntaxFactory.NamedType(SyntaxFactory.Name("Photo")),
+            SyntaxFactory.NamedType(SyntaxFactory.Name("Video"))
+        }));
+        Assert.Equal(expected, result);
+        Assert.Equal(expected, PrintAndParse(result));
     }
 }

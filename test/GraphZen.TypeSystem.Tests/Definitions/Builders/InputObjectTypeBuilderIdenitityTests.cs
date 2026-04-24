@@ -6,53 +6,51 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.TypeSystem.Tests;
 
-namespace GraphZen.TypeSystem.Tests
+[NoReorder]
+public class InputObjectTypeBuilderIdenitityTests : TypeBuilderIdentityTests<InputObjectType>
 {
-    [NoReorder]
-    public class InputObjectTypeBuilderIdenitityTests : TypeBuilderIdentityTests<InputObjectType>
+    public class FooInput
     {
-        public class FooInput
-        {
-        }
+    }
 
-        public class BarInput
-        {
-        }
+    public class BarInput
+    {
+    }
 
 
-        public override Type ClrType { get; } = typeof(FooInput);
-        public override Type NewClrType { get; } = typeof(BarInput);
+    public override Type ClrType { get; } = typeof(FooInput);
+    public override Type NewClrType { get; } = typeof(BarInput);
 
-        public override void CreateTypeWithName(SchemaBuilder schemaBuilder, string name)
-        {
-            schemaBuilder.InputObject(name);
-        }
+    public override void CreateTypeWithName(SchemaBuilder schemaBuilder, string name)
+    {
+        schemaBuilder.InputObject(name);
+    }
 
-        public override void CreateTypeWithClrType(SchemaBuilder schemaBuilder, Type clrType)
-        {
-            schemaBuilder.InputObject(clrType);
-        }
+    public override void CreateTypeWithClrType(SchemaBuilder schemaBuilder, Type clrType)
+    {
+        schemaBuilder.InputObject(clrType);
+    }
 
 
-        public override void ChangeNameByName(SchemaBuilder schemaBuilder, string name, string newName)
-        {
-            schemaBuilder.InputObject(name).Name(newName);
-        }
+    public override void ChangeNameByName(SchemaBuilder schemaBuilder, string name, string newName)
+    {
+        schemaBuilder.InputObject(name).Name(newName);
+    }
 
-        public override void ChangeNameByType(SchemaBuilder schemaBuilder, Type clrType, string newName)
-        {
-            schemaBuilder.InputObject(clrType).Name(newName);
-        }
+    public override void ChangeNameByType(SchemaBuilder schemaBuilder, Type clrType, string newName)
+    {
+        schemaBuilder.InputObject(clrType).Name(newName);
+    }
 
-        public override void RemoveNameByName(SchemaBuilder schemaBuilder, string name)
-        {
-            schemaBuilder.InputObject(name).Name(null!);
-        }
+    public override void RemoveNameByName(SchemaBuilder schemaBuilder, string name)
+    {
+        schemaBuilder.InputObject(name).Name(null!);
+    }
 
-        public override void RemoveNameByClrType(SchemaBuilder schemaBuilder, Type clrType)
-        {
-            schemaBuilder.InputObject(clrType).Name(null!);
-        }
+    public override void RemoveNameByClrType(SchemaBuilder schemaBuilder, Type clrType)
+    {
+        schemaBuilder.InputObject(clrType).Name(null!);
     }
 }

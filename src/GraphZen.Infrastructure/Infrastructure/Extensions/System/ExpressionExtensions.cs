@@ -8,38 +8,37 @@ using System.Reflection;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.Infrastructure
+namespace GraphZen.Infrastructure;
+
+internal static class ExpressionExtensions
 {
-    internal static class ExpressionExtensions
+    public static Func<T, TResult> GetFuncFromExpression<T, TResult>(
+        this Expression<Func<T, TResult>> propertySelector) =>
+        propertySelector.Compile();
+
+
+    public static PropertyInfo GetPropertyInfoFromExpression<T, TResult>(
+        this Expression<Func<T, TResult>> propertySelector)
     {
-        public static Func<T, TResult> GetFuncFromExpression<T, TResult>(
-            this Expression<Func<T, TResult>> propertySelector) =>
-            propertySelector.Compile();
+        MemberExpression exp;
 
-
-        public static PropertyInfo GetPropertyInfoFromExpression<T, TResult>(
-            this Expression<Func<T, TResult>> propertySelector)
+        //this line is necessary, because sometimes the expression comes in as Convert(originalexpression)
+        if (propertySelector.Body is UnaryExpression unExp)
         {
-            MemberExpression exp;
-
-            //this line is necessary, because sometimes the expression comes in as Convert(originalexpression)
-            if (propertySelector.Body is UnaryExpression unExp)
-            {
-                if (unExp.Operand is MemberExpression expression)
-                    exp = expression;
-                else
-                    throw new ArgumentException();
-            }
-            else if (propertySelector.Body is MemberExpression expression)
-            {
+            if (unExp.Operand is MemberExpression expression)
                 exp = expression;
-            }
             else
-            {
                 throw new ArgumentException();
-            }
-
-            return (PropertyInfo)exp.Member;
         }
+        else if (propertySelector.Body is MemberExpression expression)
+        {
+            exp = expression;
+        }
+        else
+        {
+            throw new ArgumentException();
+        }
+
+        return (PropertyInfo)exp.Member;
     }
 }

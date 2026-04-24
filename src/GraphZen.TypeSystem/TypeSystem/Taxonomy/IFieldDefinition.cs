@@ -6,21 +6,20 @@ using System.Reflection;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
+namespace GraphZen.TypeSystem.Taxonomy;
+
+[GraphQLIgnore]
+public interface IFieldDefinition : IAnnotatableDefinition, IArgumentsDefinition, INamed, IDescription,
+    IDeprecation,
+    IClrInfo,
+    IOutputDefinition
 {
-    [GraphQLIgnore]
-    public interface IFieldDefinition : IAnnotatableDefinition, IArgumentsDefinition, INamed, IDescription,
-        IDeprecation,
-        IClrInfo,
-        IOutputDefinition
-    {
-        IGraphQLTypeReference? FieldType { get; }
+    IGraphQLTypeReference? FieldType { get; }
 
 
-        Resolver<object, object?>? Resolver { get; }
+    Resolver<object, object?>? Resolver { get; }
 
-        IFieldsDefinition? DeclaringType { get; }
+    IFieldsDefinition? DeclaringType { get; }
 
-        new MemberInfo? ClrInfo { get; }
-    }
+    new MemberInfo? ClrInfo { get; }
 }

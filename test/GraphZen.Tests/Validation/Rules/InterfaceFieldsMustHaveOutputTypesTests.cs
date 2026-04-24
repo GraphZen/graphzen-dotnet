@@ -10,46 +10,46 @@ using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.Tests.Validation.Rules.SdlValidationHelpers;
 
-namespace GraphZen.Tests.Validation.Rules
+namespace GraphZen.Tests.Validation.Rules;
+
+[NoReorder]
+public class InterfaceFieldsMustHaveOutputTypesTests : ValidationRuleHarness
 {
-    [NoReorder]
-    public class InterfaceFieldsMustHaveOutputTypesTests : ValidationRuleHarness
+    public override ValidationRule RuleUnderTest { get; } =
+        DocumentValidationRules.InterfaceFieldsMustHaveOutputTypes;
+
+    public static IEnumerable<object[]> GetValidInterfaceFieldTypeScenarios()
     {
-        public override ValidationRule RuleUnderTest { get; } =
-            DocumentValidationRules.InterfaceFieldsMustHaveOutputTypes;
+        return from outputType in OutputTypes
+            from fieldType in "SomeOutputType".WithModifiers()
+            select new object[] { outputType, fieldType };
+    }
 
-        public static IEnumerable<object[]> GetValidInterfaceFieldTypeScenarios()
-        {
-            return from outputType in OutputTypes
-                   from fieldType in "SomeOutputType".WithModifiers()
-                   select new object[] { outputType, fieldType };
-        }
-
-        [Theory]
-        [MemberData(nameof(GetValidInterfaceFieldTypeScenarios))]
-        public void AcceptsAnOutputTypeAsAnInterfaceFieldType(string outputType, string fieldType)
-        {
-            SdlShouldPass($@"
+    [Theory]
+    [MemberData(nameof(GetValidInterfaceFieldTypeScenarios))]
+    public void AcceptsAnOutputTypeAsAnInterfaceFieldType(string outputType, string fieldType)
+    {
+        SdlShouldPass($@"
               {outputType} SomeOutputType
 
               interface SomeInterface {{
                  someField: {fieldType}
               }}
             ");
-        }
+    }
 
-        public static IEnumerable<object[]> GetInvalidInterfaceFieldTypeScenarios()
-        {
-            return from nonOutputType in NonOutputTypes
-                   from fieldType in "SomeInputType".WithModifiers()
-                   select new object[] { nonOutputType, fieldType };
-        }
+    public static IEnumerable<object[]> GetInvalidInterfaceFieldTypeScenarios()
+    {
+        return from nonOutputType in NonOutputTypes
+            from fieldType in "SomeInputType".WithModifiers()
+            select new object[] { nonOutputType, fieldType };
+    }
 
-        [Theory]
-        [MemberData(nameof(GetInvalidInterfaceFieldTypeScenarios))]
-        public void RejectsNonOutputTypeAsAnInterfaceFieldType(string nonOutputType, string badFieldType)
-        {
-            SdlShouldFail($@"
+    [Theory]
+    [MemberData(nameof(GetInvalidInterfaceFieldTypeScenarios))]
+    public void RejectsNonOutputTypeAsAnInterfaceFieldType(string nonOutputType, string badFieldType)
+    {
+        SdlShouldFail($@"
               {nonOutputType} SomeInputType 
             
               interface BadInterface {{
@@ -60,14 +60,14 @@ namespace GraphZen.Tests.Validation.Rules
                 badField: {badFieldType}
               }}
             ", Error($"The type of BadInterface.badField must be Output Type but got: {badFieldType}.", (4, 14)),
-                Error($"The type of BadImplementing.badField must be Output Type but got: {badFieldType}.", (8, 13)));
-        }
+            Error($"The type of BadImplementing.badField must be Output Type but got: {badFieldType}.", (8, 13)));
+    }
 
 
-        [Fact]
-        public void RejectsNonOutputTypeAsAnInterfaceFieldTypeWithLocations()
-        {
-            SdlShouldFail(@"
+    [Fact]
+    public void RejectsNonOutputTypeAsAnInterfaceFieldTypeWithLocations()
+    {
+        SdlShouldFail(@"
               type Query {
                 test: SomeInterface
               }
@@ -84,13 +84,13 @@ namespace GraphZen.Tests.Validation.Rules
                 field: SomeInputObject
               }
             ", Error("The type of SomeInterface.field must be Output Type but got: SomeInputObject.", (6, 10)),
-                Error("The type of SomeObject.field must be Output Type but got: SomeInputObject.", (14, 10)));
-        }
+            Error("The type of SomeObject.field must be Output Type but got: SomeInputObject.", (14, 10)));
+    }
 
-        [Fact]
-        public void AcceptsAnInterfaceNotImplementedByAtLeastOneObject()
-        {
-            SdlShouldPass(@"
+    [Fact]
+    public void AcceptsAnInterfaceNotImplementedByAtLeastOneObject()
+    {
+        SdlShouldPass(@"
               type Query {
                 test: SomeInterface
               }
@@ -99,6 +99,5 @@ namespace GraphZen.Tests.Validation.Rules
                 foo: String
               }
             ");
-        }
     }
 }

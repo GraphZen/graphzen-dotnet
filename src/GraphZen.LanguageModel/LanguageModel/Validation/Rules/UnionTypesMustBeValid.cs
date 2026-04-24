@@ -8,78 +8,73 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.LanguageModel.Validation.Rules;
 
-
-namespace GraphZen.LanguageModel.Validation.Rules
+public class UnionTypesMustBeValid : DocumentValidationRuleVisitor
 {
-    public class UnionTypesMustBeValid : DocumentValidationRuleVisitor
+    private readonly Dictionary<string, ICollection<UnionTypeDefinitionSyntax>> _unionDefs = new();
+
+
+    private readonly Dictionary<string, ICollection<UnionTypeExtensionSyntax>> _unionExts = new();
+
+    public UnionTypesMustBeValid(DocumentValidationContext context) : base(context)
     {
-        private readonly Dictionary<string, ICollection<UnionTypeDefinitionSyntax>> _unionDefs =
-            new Dictionary<string, ICollection<UnionTypeDefinitionSyntax>>();
+    }
 
+    public override VisitAction EnterUnionTypeDefinition(UnionTypeDefinitionSyntax node)
+    {
+        _unionDefs.AddItem(node.Name.Value, node);
+        return false;
+    }
 
-        private readonly Dictionary<string, ICollection<UnionTypeExtensionSyntax>> _unionExts =
-            new Dictionary<string, ICollection<UnionTypeExtensionSyntax>>();
+    public override VisitAction EnterUnionTypeExtension(UnionTypeExtensionSyntax node)
+    {
+        _unionExts.AddItem(node.Name.Value, node);
+        return false;
+    }
 
-        public UnionTypesMustBeValid(DocumentValidationContext context) : base(context)
+    public override VisitAction LeaveDocument(DocumentSyntax node)
+    {
+        foreach (var union in _unionDefs.Values.Select(_ =>
+                 {
+                     Debug.Assert(_ != null, nameof(_) + " != null");
+                     return _.First();
+                 }))
         {
-        }
+            Debug.Assert(union != null, nameof(union) + " != null");
+            var unionTypeName = union.Name.Value;
+            var unionExtensions = _unionExts.GetItems(union.Name.Value).ToList();
+            var nodes = new List<SyntaxNode> { union };
+            nodes.AddRange(unionExtensions);
+            // ReSharper disable once PossibleNullReferenceException
+            var types = union.MemberTypes.Concat(unionExtensions.SelectMany(_ => _.Types)).ToList();
+            if (!types.Any())
+                ReportError($"Union type {unionTypeName} must define one or more member types.", nodes);
 
-        public override VisitAction EnterUnionTypeDefinition(UnionTypeDefinitionSyntax node)
-        {
-            _unionDefs.AddItem(node.Name.Value, node);
-            return false;
-        }
-
-        public override VisitAction EnterUnionTypeExtension(UnionTypeExtensionSyntax node)
-        {
-            _unionExts.AddItem(node.Name.Value, node);
-            return false;
-        }
-
-        public override VisitAction LeaveDocument(DocumentSyntax node)
-        {
-            foreach (var union in _unionDefs.Values.Select(_ =>
+            // ReSharper disable once PossibleNullReferenceException
+            foreach (var duplicateTypes in types
+                         .GroupBy(_ => _.Name.Value)
+                         .Where(_ => _.Count() > 1))
             {
-                Debug.Assert(_ != null, nameof(_) + " != null");
-                return _.First();
-            }))
-            {
-                Debug.Assert(union != null, nameof(union) + " != null");
-                var unionTypeName = union.Name.Value;
-                var unionExtensions = _unionExts.GetItems(union.Name.Value).ToList();
-                var nodes = new List<SyntaxNode> { union };
-                nodes.AddRange(unionExtensions);
-                // ReSharper disable once PossibleNullReferenceException
-                var types = union.MemberTypes.Concat(unionExtensions.SelectMany(_ => _.Types)).ToList();
-                if (!types.Any())
-                    ReportError($"Union type {unionTypeName} must define one or more member types.", nodes);
-
-                // ReSharper disable once PossibleNullReferenceException
-                foreach (var duplicateTypes in types
-                    .GroupBy(_ => _.Name.Value)
-                    .Where(_ => _.Count() > 1))
-                {
-                    ReportError($"Union type {unionTypeName} can only include type {duplicateTypes.Key} once.",
-                        duplicateTypes.ToList());
-                }
-
-                var objectTypes = node.Definitions.OfType<ObjectTypeDefinitionSyntax>().ToList();
-                foreach (var type in types)
-                {
-                    var objectType = objectTypes.FirstOrDefault(_ =>
-                    {
-                        Debug.Assert(_ != null, nameof(_) + " != null");
-                        return _.Name.Value == type.Name.Value;
-                    });
-                    if (objectType == null)
-                        ReportError(
-                            $"Union type {unionTypeName} can only include Object types, it cannot include {type.Name.Value}.",
-                            type);
-                }
+                ReportError($"Union type {unionTypeName} can only include type {duplicateTypes.Key} once.",
+                    duplicateTypes.ToList());
             }
 
-            return false;
+            var objectTypes = node.Definitions.OfType<ObjectTypeDefinitionSyntax>().ToList();
+            foreach (var type in types)
+            {
+                var objectType = objectTypes.FirstOrDefault(_ =>
+                {
+                    Debug.Assert(_ != null, nameof(_) + " != null");
+                    return _.Name.Value == type.Name.Value;
+                });
+                if (objectType == null)
+                    ReportError(
+                        $"Union type {unionTypeName} can only include Object types, it cannot include {type.Name.Value}.",
+                        type);
+            }
         }
+
+        return false;
     }
 }

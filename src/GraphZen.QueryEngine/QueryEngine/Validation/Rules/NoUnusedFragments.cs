@@ -5,12 +5,11 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.QueryEngine.Validation.Rules
+namespace GraphZen.QueryEngine.Validation.Rules;
+
+public class NoUnusedFragments : QueryValidationRuleVisitor
 {
-    public class NoUnusedFragments : QueryValidationRuleVisitor
+    public NoUnusedFragments(QueryValidationContext context) : base(context)
     {
-        public NoUnusedFragments(QueryValidationContext context) : base(context)
-        {
-        }
     }
 }

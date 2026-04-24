@@ -6,12 +6,9 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.LanguageModel;
 
-
-namespace GraphZen.LanguageModel
+public interface IFieldsNode : INamedSyntax
 {
-    public interface IFieldsNode : INamedSyntax
-    {
-        IReadOnlyList<FieldDefinitionSyntax> Fields { get; }
-    }
+    IReadOnlyList<FieldDefinitionSyntax> Fields { get; }
 }

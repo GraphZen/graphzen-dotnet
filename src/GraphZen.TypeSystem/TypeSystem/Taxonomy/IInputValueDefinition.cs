@@ -5,19 +5,18 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
+namespace GraphZen.TypeSystem.Taxonomy;
+
+[GraphQLIgnore]
+public interface IInputValueDefinition : IAnnotatableDefinition, INamed, IDescription, IInputDefinition, IClrInfo
 {
-    [GraphQLIgnore]
-    public interface IInputValueDefinition : IAnnotatableDefinition, INamed, IDescription, IInputDefinition, IClrInfo
-    {
-        IGraphQLTypeReference? InputType { get; }
+    IGraphQLTypeReference? InputType { get; }
 
 
-        IMemberDefinition DeclaringMember { get; }
+    IMemberDefinition DeclaringMember { get; }
 
 
-        object? DefaultValue { get; }
+    object? DefaultValue { get; }
 
-        bool HasDefaultValue { get; }
-    }
+    bool HasDefaultValue { get; }
 }

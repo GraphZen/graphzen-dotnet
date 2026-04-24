@@ -10,27 +10,26 @@ using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem
+namespace GraphZen.TypeSystem;
+
+[GraphQLIgnore]
+public abstract class AnnotatableMember : Member, IDirectiveAnnotations
 {
-    [GraphQLIgnore]
-    public abstract class AnnotatableMember : Member, IDirectiveAnnotations
+    protected AnnotatableMember(IReadOnlyList<IDirectiveAnnotation>? directives)
     {
-        protected AnnotatableMember(IReadOnlyList<IDirectiveAnnotation>? directives)
-        {
-            DirectiveAnnotations = directives ?? ImmutableArray<IDirectiveAnnotation>.Empty;
-        }
+        DirectiveAnnotations = directives ?? ImmutableArray<IDirectiveAnnotation>.Empty;
+    }
 
-        [GraphQLIgnore] public abstract DirectiveLocation DirectiveLocation { get; }
-        public IEnumerable<IDirectiveAnnotation> GetDirectiveAnnotations() => DirectiveAnnotations;
+    [GraphQLIgnore] public IReadOnlyList<IDirectiveAnnotation> DirectiveAnnotations { get; }
+
+    [GraphQLIgnore] public abstract DirectiveLocation DirectiveLocation { get; }
+    public IEnumerable<IDirectiveAnnotation> GetDirectiveAnnotations() => DirectiveAnnotations;
 
 
-        [GraphQLIgnore]
-        public IDirectiveAnnotation? FindDirectiveAnnotation(string name)
-        {
-            Check.NotNull(name, nameof(name));
-            return DirectiveAnnotations.SingleOrDefault(_ => _.Name == name);
-        }
-
-        [GraphQLIgnore] public IReadOnlyList<IDirectiveAnnotation> DirectiveAnnotations { get; }
+    [GraphQLIgnore]
+    public IDirectiveAnnotation? FindDirectiveAnnotation(string name)
+    {
+        Check.NotNull(name, nameof(name));
+        return DirectiveAnnotations.SingleOrDefault(_ => _.Name == name);
     }
 }

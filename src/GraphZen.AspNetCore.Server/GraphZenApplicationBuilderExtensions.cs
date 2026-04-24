@@ -22,117 +22,117 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.DependencyInjection;
 
 // ReSharper disable once CheckNamespace
-namespace Microsoft.AspNetCore.Builder
+namespace Microsoft.AspNetCore.Builder;
+
+public static class GraphZenApplicationBuilderExtensions
 {
-    public static class GraphZenApplicationBuilderExtensions
+    private const int DefaultMemoryThreshold = 1024 * 30;
+
+    private static string? _sTempDirectory;
+    private static ILog Logger { get; } = LogProvider.GetCurrentClassLogger();
+
+    public static string TempDirectory
     {
-        private static ILog Logger { get; } = LogProvider.GetCurrentClassLogger();
-        private const int DefaultMemoryThreshold = 1024 * 30;
-
-        private static string? _sTempDirectory;
-
-        public static string TempDirectory
+        get
         {
-            get
+            if (_sTempDirectory == null)
             {
-                if (_sTempDirectory == null)
-                {
-                    // Look for folders in the following order.
-                    var temp =
-                        Environment.GetEnvironmentVariable(
-                            "ASPNETCORE_TEMP") ?? // ASPNETCORE_TEMP - User set temporary location.
-                        Path.GetTempPath(); // Fall back.
+                // Look for folders in the following order.
+                var temp =
+                    Environment.GetEnvironmentVariable(
+                        "ASPNETCORE_TEMP") ?? // ASPNETCORE_TEMP - User set temporary location.
+                    Path.GetTempPath(); // Fall back.
 
-                    if (!Directory.Exists(temp)) throw new DirectoryNotFoundException(temp);
+                if (!Directory.Exists(temp)) throw new DirectoryNotFoundException(temp);
 
-                    _sTempDirectory = temp;
-                }
-
-                return _sTempDirectory;
+                _sTempDirectory = temp;
             }
+
+            return _sTempDirectory;
         }
+    }
 
-        public static Func<string> TempDirectoryFactory => () => TempDirectory;
+    public static Func<string> TempDirectoryFactory => () => TempDirectory;
 
-        public static IEndpointConventionBuilder MapGraphQL(this IEndpointRouteBuilder endpoints, string path = "/")
+    public static IEndpointConventionBuilder MapGraphQL(this IEndpointRouteBuilder endpoints, string path = "/")
+    {
+        return endpoints.MapPost(path, async httpContext =>
         {
-            return endpoints.MapPost(path, async httpContext =>
+            var request = httpContext.Request;
+            var readStream = request.Body;
+            if (!request.Body.CanSeek)
             {
-                var request = httpContext.Request;
-                var readStream = request.Body;
-                if (!request.Body.CanSeek)
+                var memoryThreshold = DefaultMemoryThreshold;
+                var contentLength = request.ContentLength.GetValueOrDefault();
+                if (contentLength > 0 && contentLength < memoryThreshold)
+                    memoryThreshold = (int)contentLength;
+
+                readStream = new FileBufferingReadStream(request.Body, memoryThreshold, null,
+                    TempDirectoryFactory);
+
+                await readStream.DrainAsync(CancellationToken.None);
+                readStream.Seek(0L, SeekOrigin.Begin);
+            }
+
+            ExecutionResult result;
+            var graphQLContext = httpContext.RequestServices.GetRequiredService<GraphQLContext>();
+            try
+            {
+                var req = await JsonSerializer.DeserializeAsync<GraphQLServerRequest>(readStream,
+                    Json.SerializerOptions);
+                var document = Parser.ParseDocument(req!.Query!);
+                var queryValidator = httpContext.RequestServices.GetRequiredService<IQueryValidator>();
+                var validationErrors = queryValidator.Validate(graphQLContext.Schema, document);
+
+                if (validationErrors.Any())
                 {
-                    var memoryThreshold = DefaultMemoryThreshold;
-                    var contentLength = request.ContentLength.GetValueOrDefault();
-                    if (contentLength > 0 && contentLength < memoryThreshold)
-                        memoryThreshold = (int)contentLength;
-
-                    readStream = new FileBufferingReadStream(request.Body, memoryThreshold, null,
-                        TempDirectoryFactory);
-
-                    await readStream.DrainAsync(CancellationToken.None);
-                    readStream.Seek(0L, SeekOrigin.Begin);
+                    result = new ExecutionResult(null, validationErrors);
                 }
-
-                ExecutionResult result;
-                var graphQLContext = httpContext.RequestServices.GetRequiredService<GraphQLContext>();
-                try
+                else
                 {
-                    var req = await JsonSerializer.DeserializeAsync<GraphQLServerRequest>(readStream, Json.SerializerOptions);
-                    var document = Parser.ParseDocument(req!.Query!);
-                    var queryValidator = httpContext.RequestServices.GetRequiredService<IQueryValidator>();
-                    var validationErrors = queryValidator.Validate(graphQLContext.Schema, document);
+                    var operationDefinitions =
+                        document.Definitions.OfType<OperationDefinitionSyntax>().ToList();
 
-                    if (validationErrors.Any())
-                    {
-                        result = new ExecutionResult(null, validationErrors);
-                    }
-                    else
-                    {
-                        var operationDefinitions =
-                            document.Definitions.OfType<OperationDefinitionSyntax>().ToList();
+                    var operation = req.OperationName != null
+                        ? operationDefinitions
+                            .FirstOrDefault(_ => _.Name?.Value == req.OperationName)
+                        : operationDefinitions.First();
 
-                        var operation = req.OperationName != null
-                            ? operationDefinitions
-                                .FirstOrDefault(_ => _.Name?.Value == req.OperationName)
-                            : operationDefinitions.First();
+                    var rootClrType = operation?.OperationType == OperationType.Query
+                        ? graphQLContext.Schema.QueryType.ClrType
+                        : operation?.OperationType == OperationType.Mutation
+                            ? graphQLContext.Schema.MutationType?.ClrType
+                            : null;
 
-                        var rootClrType = operation?.OperationType == OperationType.Query
-                            ? graphQLContext.Schema.QueryType.ClrType
-                            : operation?.OperationType == OperationType.Mutation
-                                ? graphQLContext.Schema.MutationType?.ClrType
-                                : null;
+                    var rootValue = rootClrType != null
+                        ? httpContext.RequestServices.GetService(rootClrType)
+                        : new { };
 
-                        var rootValue = rootClrType != null
-                            ? httpContext.RequestServices.GetService(rootClrType)
-                            : new { };
-
-                        result = await new Executor().ExecuteAsync(graphQLContext.Schema, document,
-                            rootValue,
-                            graphQLContext, req.Variables, req.OperationName, new ExecutionOptions
-                            {
-                                ThrowOnError = false
-                            });
-                    }
+                    result = await new Executor().ExecuteAsync(graphQLContext.Schema, document,
+                        rootValue,
+                        graphQLContext, req.Variables, req.OperationName, new ExecutionOptions
+                        {
+                            ThrowOnError = false
+                        });
                 }
-                catch (GraphQLException gqlException)
-                {
-                    Logger.Error(gqlException, gqlException.Message);
-                    result = new ExecutionResult(null, new[] { gqlException.GraphQLError });
-                }
-                catch (Exception e)
-                {
-                    Logger.Error(e, e.Message);
-                    var coreOptions = graphQLContext.Options.GetExtension<CoreOptionsExtension>();
-                    var error = coreOptions.RevealInternalServerErrors
-                        ? new GraphQLServerError(e.Message, innerException: e)
-                        : new GraphQLServerError("An unknown error occured.");
-                    result = new ExecutionResult(null, new[] { error });
-                }
+            }
+            catch (GraphQLException gqlException)
+            {
+                Logger.Error(gqlException, gqlException.Message);
+                result = new ExecutionResult(null, new[] { gqlException.GraphQLError });
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e, e.Message);
+                var coreOptions = graphQLContext.Options.GetExtension<CoreOptionsExtension>();
+                var error = coreOptions.RevealInternalServerErrors
+                    ? new GraphQLServerError(e.Message, innerException: e)
+                    : new GraphQLServerError("An unknown error occured.");
+                result = new ExecutionResult(null, new[] { error });
+            }
 
-                var resp = JsonSerializer.Serialize(result, Json.SerializerOptions);
-                await httpContext.Response.WriteAsync(resp);
-            });
-        }
+            var resp = JsonSerializer.Serialize(result, Json.SerializerOptions);
+            await httpContext.Response.WriteAsync(resp);
+        });
     }
 }

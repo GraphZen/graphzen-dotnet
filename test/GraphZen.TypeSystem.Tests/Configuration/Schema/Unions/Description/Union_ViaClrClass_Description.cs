@@ -7,33 +7,32 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Tests.Configuration.Unions.Description
+namespace GraphZen.TypeSystem.Tests.Configuration.Unions.Description;
+
+// ReSharper disable once InconsistentNaming
+public class Union_ViaClrClass_Description : Union_Description, ILeafConventionConfigurationFixture
 {
-    // ReSharper disable once InconsistentNaming
-    public class Union_ViaClrClass_Description : Union_Description, ILeafConventionConfigurationFixture
+    public const string DataAnnotationDescriptionValue = nameof(DataAnnotationDescriptionValue);
+
+    public LeafConventionContext GetContext() =>
+        new()
+        {
+            ParentName = nameof(ExampleUnion),
+            DataAnnotationValue = DataAnnotationDescriptionValue
+        };
+
+    public void ConfigureContextConventionally(SchemaBuilder sb)
     {
-        public const string DataAnnotationDescriptionValue = nameof(DataAnnotationDescriptionValue);
+        sb.Union<ExampleUnion>();
+    }
 
-        public LeafConventionContext GetContext() =>
-            new LeafConventionContext
-            {
-                ParentName = nameof(ExampleUnion),
-                DataAnnotationValue = DataAnnotationDescriptionValue
-            };
+    public void ConfigureClrContext(SchemaBuilder sb, string parentName)
+    {
+        sb.Union<ExampleUnion>();
+    }
 
-        public void ConfigureContextConventionally(SchemaBuilder sb)
-        {
-            sb.Union<ExampleUnion>();
-        }
-
-        public void ConfigureClrContext(SchemaBuilder sb, string parentName)
-        {
-            sb.Union<ExampleUnion>();
-        }
-
-        [Description(DataAnnotationDescriptionValue)]
-        public class ExampleUnion
-        {
-        }
+    [Description(DataAnnotationDescriptionValue)]
+    public class ExampleUnion
+    {
     }
 }

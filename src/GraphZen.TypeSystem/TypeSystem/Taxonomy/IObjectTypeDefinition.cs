@@ -5,14 +5,13 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
+namespace GraphZen.TypeSystem.Taxonomy;
+
+[GraphQLIgnore]
+public interface IObjectTypeDefinition :
+    IFieldsDefinition,
+    IInterfacesDefinition,
+    ICompositeTypeDefinition, IOutputDefinition
 {
-    [GraphQLIgnore]
-    public interface IObjectTypeDefinition :
-        IFieldsDefinition,
-        IInterfacesDefinition,
-        ICompositeTypeDefinition, IOutputDefinition
-    {
-        IsTypeOf<object, GraphQLContext>? IsTypeOf { get; }
-    }
+    IsTypeOf<object, GraphQLContext>? IsTypeOf { get; }
 }

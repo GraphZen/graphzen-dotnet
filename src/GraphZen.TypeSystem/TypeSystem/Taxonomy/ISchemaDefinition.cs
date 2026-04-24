@@ -5,21 +5,20 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
+namespace GraphZen.TypeSystem.Taxonomy;
+
+[GraphQLIgnore]
+public interface ISchemaDefinition :
+    IDescription,
+    IQueryTypeDefinition,
+    IMutationTypeDefinition,
+    ISubscriptionTypeDefinition,
+    IDirectivesDefinition,
+    IObjectTypesDefinition,
+    IInterfaceTypesDefinition,
+    IUnionTypesDefinition,
+    IScalarTypesDefinition,
+    IEnumTypesDefinition,
+    IInputObjectTypesDefinition
 {
-    [GraphQLIgnore]
-    public interface ISchemaDefinition :
-        IDescription,
-        IQueryTypeDefinition,
-        IMutationTypeDefinition,
-        ISubscriptionTypeDefinition,
-        IDirectivesDefinition,
-        IObjectTypesDefinition,
-        IInterfaceTypesDefinition,
-        IUnionTypesDefinition,
-        IScalarTypesDefinition,
-        IEnumTypesDefinition,
-        IInputObjectTypesDefinition
-    {
-    }
 }

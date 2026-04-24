@@ -6,52 +6,50 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.TypeSystem.Tests;
 
-namespace GraphZen.TypeSystem.Tests
+[NoReorder]
+public class InterfaceTypeBuilderIdentityTests : TypeBuilderIdentityTests<InterfaceType>
 {
-    [NoReorder]
-    public class InterfaceTypeBuilderIdentityTests : TypeBuilderIdentityTests<InterfaceType>
+    public interface IFooInterface
     {
-        public interface IFooInterface
-        {
-        }
+    }
 
-        public interface IBarInterface
-        {
-        }
+    public interface IBarInterface
+    {
+    }
 
-        public override Type ClrType { get; } = typeof(IFooInterface);
-        public override Type NewClrType { get; } = typeof(IBarInterface);
+    public override Type ClrType { get; } = typeof(IFooInterface);
+    public override Type NewClrType { get; } = typeof(IBarInterface);
 
-        public override void CreateTypeWithName(SchemaBuilder schemaBuilder, string name)
-        {
-            schemaBuilder.Interface(name);
-        }
+    public override void CreateTypeWithName(SchemaBuilder schemaBuilder, string name)
+    {
+        schemaBuilder.Interface(name);
+    }
 
-        public override void CreateTypeWithClrType(SchemaBuilder schemaBuilder, Type clrType)
-        {
-            schemaBuilder.Interface(clrType);
-        }
+    public override void CreateTypeWithClrType(SchemaBuilder schemaBuilder, Type clrType)
+    {
+        schemaBuilder.Interface(clrType);
+    }
 
 
-        public override void ChangeNameByName(SchemaBuilder schemaBuilder, string name, string newName)
-        {
-            schemaBuilder.Interface(name).Name(newName);
-        }
+    public override void ChangeNameByName(SchemaBuilder schemaBuilder, string name, string newName)
+    {
+        schemaBuilder.Interface(name).Name(newName);
+    }
 
-        public override void ChangeNameByType(SchemaBuilder schemaBuilder, Type clrType, string newName)
-        {
-            schemaBuilder.Interface(clrType).Name(newName);
-        }
+    public override void ChangeNameByType(SchemaBuilder schemaBuilder, Type clrType, string newName)
+    {
+        schemaBuilder.Interface(clrType).Name(newName);
+    }
 
-        public override void RemoveNameByName(SchemaBuilder schemaBuilder, string name)
-        {
-            schemaBuilder.Interface(name).Name(null!);
-        }
+    public override void RemoveNameByName(SchemaBuilder schemaBuilder, string name)
+    {
+        schemaBuilder.Interface(name).Name(null!);
+    }
 
-        public override void RemoveNameByClrType(SchemaBuilder schemaBuilder, Type clrType)
-        {
-            schemaBuilder.Interface(clrType).Name(null!);
-        }
+    public override void RemoveNameByClrType(SchemaBuilder schemaBuilder, Type clrType)
+    {
+        schemaBuilder.Interface(clrType).Name(null!);
     }
 }

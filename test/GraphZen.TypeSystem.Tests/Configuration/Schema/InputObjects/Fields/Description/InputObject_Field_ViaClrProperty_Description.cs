@@ -7,36 +7,35 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Tests.Configuration.InputObjects.Fields.Description
+namespace GraphZen.TypeSystem.Tests.Configuration.InputObjects.Fields.Description;
+
+// ReSharper disable once InconsistentNaming
+public class InputObject_Field_ViaClrProperty_Description : InputObject_Field_Description,
+    ILeafConventionConfigurationFixture
 {
-    // ReSharper disable once InconsistentNaming
-    public class InputObject_Field_ViaClrProperty_Description : InputObject_Field_Description,
-        ILeafConventionConfigurationFixture
+    public const string DataAnnotationDescriptionValue = nameof(DataAnnotationDescriptionValue);
+
+    public LeafConventionContext GetContext() =>
+        new()
+        {
+            ParentName = nameof(ExampleInputObject.ExampleField).FirstCharToLower(),
+            DataAnnotationValue = DataAnnotationDescriptionValue
+        };
+
+    public void ConfigureContextConventionally(SchemaBuilder sb)
     {
-        [GraphQLName(Grandparent)]
-        public class ExampleInputObject
-        {
-            [Description(DataAnnotationDescriptionValue)]
-            public string? ExampleField { get; set; }
-        }
+        sb.InputObject<ExampleInputObject>();
+    }
 
-        public const string DataAnnotationDescriptionValue = nameof(DataAnnotationDescriptionValue);
+    public void ConfigureClrContext(SchemaBuilder sb, string parentName)
+    {
+        sb.InputObject<ExampleInputObject>();
+    }
 
-        public LeafConventionContext GetContext() =>
-            new LeafConventionContext
-            {
-                ParentName = nameof(ExampleInputObject.ExampleField).FirstCharToLower(),
-                DataAnnotationValue = DataAnnotationDescriptionValue
-            };
-
-        public void ConfigureContextConventionally(SchemaBuilder sb)
-        {
-            sb.InputObject<ExampleInputObject>();
-        }
-
-        public void ConfigureClrContext(SchemaBuilder sb, string parentName)
-        {
-            sb.InputObject<ExampleInputObject>();
-        }
+    [GraphQLName(Grandparent)]
+    public class ExampleInputObject
+    {
+        [Description(DataAnnotationDescriptionValue)]
+        public string? ExampleField { get; set; }
     }
 }

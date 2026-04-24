@@ -9,66 +9,65 @@ using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem
+namespace GraphZen.TypeSystem;
+
+public class TypeReference : INamedTypeReference
 {
-    public class TypeReference : INamedTypeReference
+    public TypeReference(TypeIdentity identity, TypeSyntax typeSyntax)
     {
-        public TypeReference(TypeIdentity identity, TypeSyntax typeSyntax)
+        Identity = Check.NotNull(identity, nameof(identity));
+        TypeSyntax = Check.NotNull(typeSyntax, nameof(typeSyntax));
+    }
+
+
+    public TypeIdentity Identity { get; }
+
+
+    public TypeSyntax TypeSyntax { get; }
+
+    public string Name => Identity.Name;
+
+
+    public IGraphQLType ToType(Schema schema)
+    {
+        IGraphQLType ResolveType(TypeSyntax node)
         {
-            Identity = Check.NotNull(identity, nameof(identity));
-            TypeSyntax = Check.NotNull(typeSyntax, nameof(typeSyntax));
-        }
-
-
-        public TypeIdentity Identity { get; }
-
-
-        public TypeSyntax TypeSyntax { get; }
-
-        public string Name => Identity.Name;
-
-
-        public IGraphQLType ToType(Schema schema)
-        {
-            IGraphQLType ResolveType(TypeSyntax node)
+            switch (node)
             {
-                switch (node)
-                {
-                    case ListTypeSyntax list:
-                        return ListType.Of(ResolveType(list.OfType));
-                    case NonNullTypeSyntax nn:
-                        return NonNullType.Of((INullableType)ResolveType(nn.OfType));
-                    case NamedTypeSyntax _:
-                        var nameMatch = schema.FindType(Identity.Name);
-                        if (nameMatch != null) return nameMatch;
+                case ListTypeSyntax list:
+                    return ListType.Of(ResolveType(list.OfType));
+                case NonNullTypeSyntax nn:
+                    return NonNullType.Of((INullableType)ResolveType(nn.OfType));
+                case NamedTypeSyntax _:
+                    var nameMatch = schema.FindType(Identity.Name);
+                    if (nameMatch != null) return nameMatch;
 
-                        if (Identity.ClrType != null)
-                        {
-                            var typeMatches = schema.Types.Values
-                                .Where(_ => _.ClrType != null && _.ClrType.IsAssignableFrom(Identity.ClrType))
-                                .ToArray();
+                    if (Identity.ClrType != null)
+                    {
+                        var typeMatches = schema.Types.Values
+                            .Where(_ => _.ClrType != null && _.ClrType.IsAssignableFrom(Identity.ClrType))
+                            .ToArray();
 
-                            if (typeMatches.Length == 1) return typeMatches[0];
+                        if (typeMatches.Length == 1) return typeMatches[0];
 
-                            if (typeMatches.Length > 1)
-                                throw new Exception(
-                                    $"More than one type in the schema matched type reference  \"{Identity.Name}\" with CLR type {Identity.ClrType}");
-
+                        if (typeMatches.Length > 1)
                             throw new Exception(
-                                $"Unable to find output type for type reference named \"{Identity.Name}\" with CLR type {Identity.ClrType}");
-                        }
+                                $"More than one type in the schema matched type reference  \"{Identity.Name}\" with CLR type {Identity.ClrType}");
 
                         throw new Exception(
-                            $"Unable to find output type for type reference named \"{Identity.Name}\"");
-                }
+                            $"Unable to find output type for type reference named \"{Identity.Name}\" with CLR type {Identity.ClrType}");
+                    }
 
-                throw new Exception($"Unable to create type reference from type node: {node.GetType()}");
+                    throw new Exception(
+                        $"Unable to find output type for type reference named \"{Identity.Name}\"");
             }
 
-
-            return ResolveType(TypeSyntax);
+            throw new Exception($"Unable to create type reference from type node: {node.GetType()}");
         }
 
-        public override string ToString() => "Reference:" + Name;
+
+        return ResolveType(TypeSyntax);
     }
+
+    public override string ToString() => "Reference:" + Name;
 }

@@ -6,23 +6,22 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen
+namespace GraphZen;
+
+[AttributeUsage(AttributeTargets.Class
+                | AttributeTargets.Enum
+                | AttributeTargets.Field
+                | AttributeTargets.Method
+                | AttributeTargets.Property
+                | AttributeTargets.Parameter
+                | AttributeTargets.Interface)]
+public class GraphQLNameAttribute : Attribute
 {
-    [AttributeUsage(AttributeTargets.Class
-                    | AttributeTargets.Enum
-                    | AttributeTargets.Field
-                    | AttributeTargets.Method
-                    | AttributeTargets.Property
-                    | AttributeTargets.Parameter
-                    | AttributeTargets.Interface)]
-    public class GraphQLNameAttribute : Attribute
+    public GraphQLNameAttribute(string name)
     {
-        public GraphQLNameAttribute(string name)
-        {
-            Name = Check.NotNull(name, nameof(name));
-        }
-
-
-        public string Name { get; }
+        Name = Check.NotNull(name, nameof(name));
     }
+
+
+    public string Name { get; }
 }

@@ -8,68 +8,67 @@ using GraphZen.Internal;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace GraphZen.Client.Tests.Internal
+namespace GraphZen.Client.Tests.Internal;
+
+[NoReorder]
+public class GraphQLSerializerTests
 {
-    [NoReorder]
-    public class GraphQLSerializerTests
+    [Theory]
+    [InlineData("{}")]
+    [InlineData("null")]
+    [InlineData("{\"data\":null}")]
+    [InlineData("{\"data\":{\"value\": 1}}")]
+    [InlineData("{\"errors\": []}")]
+    [InlineData("{\"errors\": [{}]}")]
+    [InlineData("{\"errors\": [null]}")]
+    [InlineData("{\"errors\": null}")]
+    public void parse_errors_should_return_empty(string json)
+        => Assert.Empty(GraphQLJsonSerializer.ParseErrors(json));
+
+    [Fact]
+    public void parse_errors_should_return_error()
     {
-        [Theory]
-        [InlineData("{}")]
-        [InlineData("null")]
-        [InlineData("{\"data\":null}")]
-        [InlineData("{\"data\":{\"value\": 1}}")]
-        [InlineData("{\"errors\": []}")]
-        [InlineData("{\"errors\": [{}]}")]
-        [InlineData("{\"errors\": [null]}")]
-        [InlineData("{\"errors\": null}")]
-        public void parse_errors_should_return_empty(string json)
-            => Assert.Empty(GraphQLJsonSerializer.ParseErrors(json));
+        var result = GraphQLJsonSerializer.ParseErrors(
+            "{\"errors\": [{\"message\": \"hello\"}]}");
 
-        [Fact]
-        public void parse_errors_should_return_error()
+        Assert.Equivalent(
+            new List<GraphQLError> { new("hello") }, result);
+    }
+
+    [Theory]
+    [InlineData("null")]
+    [InlineData("{}")]
+    [InlineData("{\"data\":null}")]
+    [InlineData("{\"errors\": []}")]
+    [InlineData("{\"errors\": [{}]}")]
+    [InlineData("{\"errors\": [null]}")]
+    [InlineData("{\"errors\": null}")]
+    [InlineData("{\"errors\": [{\"message\": \"hello\"}]}")]
+    public void parse_data_should_return_null(string json)
+        => Assert.Null(GraphQLJsonSerializer.ParseData(json) as object);
+
+    [Fact]
+    public void parse_data_should_return_dynamic()
+    {
+        var result = GraphQLJsonSerializer.ParseData("{\"data\":{\"value\": 1}}");
+        JsonAssert.EquivalentToJsonFromObject(result as object, new { value = 1 });
+    }
+
+    public class TypedQueryResult
+    {
+        public string? Message { get; set; }
+        public int? Number { get; set; }
+    }
+
+    [Fact]
+    public void parse_typed_data_should_return_typed_data()
+    {
+        var result =
+            GraphQLJsonSerializer.ParseData<TypedQueryResult>("{\"data\":{\"number\": 1, \"message\":\"hello\"}}");
+        JsonAssert.EquivalentToJsonFromObject(result, new TypedQueryResult
         {
-            var result = GraphQLJsonSerializer.ParseErrors(
-                "{\"errors\": [{\"message\": \"hello\"}]}");
-
-            Assert.Equivalent(
-                new List<GraphQLError> { new GraphQLError("hello") }, result);
-        }
-
-        [Theory]
-        [InlineData("null")]
-        [InlineData("{}")]
-        [InlineData("{\"data\":null}")]
-        [InlineData("{\"errors\": []}")]
-        [InlineData("{\"errors\": [{}]}")]
-        [InlineData("{\"errors\": [null]}")]
-        [InlineData("{\"errors\": null}")]
-        [InlineData("{\"errors\": [{\"message\": \"hello\"}]}")]
-        public void parse_data_should_return_null(string json)
-            => Assert.Null(GraphQLJsonSerializer.ParseData(json) as object);
-
-        [Fact]
-        public void parse_data_should_return_dynamic()
-        {
-            var result = GraphQLJsonSerializer.ParseData("{\"data\":{\"value\": 1}}");
-            JsonAssert.EquivalentToJsonFromObject(result as object, new { value = 1 });
-        }
-
-        public class TypedQueryResult
-        {
-            public string? Message { get; set; }
-            public int? Number { get; set; }
-        }
-
-        [Fact]
-        public void parse_typed_data_should_return_typed_data()
-        {
-            var result =
-                GraphQLJsonSerializer.ParseData<TypedQueryResult>("{\"data\":{\"number\": 1, \"message\":\"hello\"}}");
-            JsonAssert.EquivalentToJsonFromObject(result, new TypedQueryResult
-            {
-                Message = "hello",
-                Number = 1
-            });
-        }
+            Message = "hello",
+            Number = 1
+        });
     }
 }

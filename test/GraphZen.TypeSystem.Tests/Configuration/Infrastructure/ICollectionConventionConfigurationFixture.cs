@@ -5,15 +5,14 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Tests.Configuration.Infrastructure
+namespace GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
+
+public interface ICollectionConventionConfigurationFixture : ICollectionConfigurationFixture
 {
-    public interface ICollectionConventionConfigurationFixture : ICollectionConfigurationFixture
-    {
-        CollectionConventionContext GetContext();
-        void ConfigureContextConventionally(SchemaBuilder sb);
+    CollectionConventionContext GetContext();
+    void ConfigureContextConventionally(SchemaBuilder sb);
 
-        void ConfigureClrContext(SchemaBuilder sb, string parentName);
+    void ConfigureClrContext(SchemaBuilder sb, string parentName);
 
-        //void AddItemNamedByDataAnnotationViaClrType(SchemaBuilder sb);
-    }
+    //void AddItemNamedByDataAnnotationViaClrType(SchemaBuilder sb);
 }

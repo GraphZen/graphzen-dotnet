@@ -6,11 +6,10 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.Infrastructure
+namespace GraphZen.Infrastructure;
+
+internal static class StackExtensions
 {
-    internal static class StackExtensions
-    {
-        public static T? PeekOrDefault<T>(this Stack<T> stack) =>
-            Check.NotNull(stack, nameof(stack)).Count > 0 ? stack.Peek() : default;
-    }
+    public static T? PeekOrDefault<T>(this Stack<T> stack) =>
+        Check.NotNull(stack, nameof(stack)).Count > 0 ? stack.Peek() : default;
 }

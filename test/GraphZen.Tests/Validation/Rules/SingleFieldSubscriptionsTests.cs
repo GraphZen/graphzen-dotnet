@@ -7,12 +7,10 @@ using GraphZen.LanguageModel.Validation;
 using GraphZen.QueryEngine.Validation;
 using JetBrains.Annotations;
 
+namespace GraphZen.Tests.Validation.Rules;
 
-namespace GraphZen.Tests.Validation.Rules
+[NoReorder]
+public class SingleFieldSubscriptionsTests : ValidationRuleHarness
 {
-    [NoReorder]
-    public class SingleFieldSubscriptionsTests : ValidationRuleHarness
-    {
-        public override ValidationRule RuleUnderTest { get; } = QueryValidationRules.SingleFieldSubscriptions;
-    }
+    public override ValidationRule RuleUnderTest { get; } = QueryValidationRules.SingleFieldSubscriptions;
 }

@@ -7,16 +7,13 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.LanguageModel;
 
-
-namespace GraphZen.LanguageModel
+public partial class PunctuatorSyntax : SyntaxNode
 {
-    public partial class PunctuatorSyntax : SyntaxNode
+    public PunctuatorSyntax(SyntaxLocation? location) : base(location)
     {
-        public PunctuatorSyntax(SyntaxLocation? location) : base(location)
-        {
-        }
-
-        public override IEnumerable<SyntaxNode> Children => Enumerable.Empty<SyntaxNode>();
     }
+
+    public override IEnumerable<SyntaxNode> Children => Enumerable.Empty<SyntaxNode>();
 }

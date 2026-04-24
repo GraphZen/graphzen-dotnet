@@ -6,41 +6,40 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace GraphZen.TypeSystem.Tests.Configuration.Enums.ClrType
+namespace GraphZen.TypeSystem.Tests.Configuration.Enums.ClrType;
+
+[NoReorder]
+public class EnumClrTypeConfigurationTests
 {
-    [NoReorder]
-    public class EnumClrTypeConfigurationTests
+    public enum ExampleEnum
     {
-        public enum ExampleEnum
-        {
-        }
+    }
 
-        [Fact]
-        public void enum_added_explicitly_subsequently_referenced_by_matching_clr_type_should_have_clr_type_set()
+    [Fact]
+    public void enum_added_explicitly_subsequently_referenced_by_matching_clr_type_should_have_clr_type_set()
+    {
+        var schema = Schema.Create(sb =>
         {
-            var schema = Schema.Create(sb =>
-            {
-                sb.Enum(nameof(ExampleEnum));
-                var def = sb.GetDefinition().GetEnum(nameof(ExampleEnum));
-                sb.Enum<ExampleEnum>();
-                Assert.Equal(typeof(ExampleEnum), def.ClrType);
-            });
-            Assert.Equal(typeof(ExampleEnum), schema.GetEnum<ExampleEnum>().ClrType);
-        }
+            sb.Enum(nameof(ExampleEnum));
+            var def = sb.GetDefinition().GetEnum(nameof(ExampleEnum));
+            sb.Enum<ExampleEnum>();
+            Assert.Equal(typeof(ExampleEnum), def.ClrType);
+        });
+        Assert.Equal(typeof(ExampleEnum), schema.GetEnum<ExampleEnum>().ClrType);
+    }
 
-        [Fact]
-        public void
-            enum_added_explicitly_subsequently_referenced_by_matching_clr_type_via_field_should_have_clr_type_set()
+    [Fact]
+    public void
+        enum_added_explicitly_subsequently_referenced_by_matching_clr_type_via_field_should_have_clr_type_set()
+    {
+        var schema = Schema.Create(sb =>
         {
-            var schema = Schema.Create(sb =>
-            {
-                sb.Enum(nameof(ExampleEnum));
-                sb.Object("Parent").Field<ExampleEnum>("field");
-                var def = sb.GetDefinition().GetEnum(nameof(ExampleEnum));
-                sb.Enum<ExampleEnum>();
-                Assert.Equal(typeof(ExampleEnum), def.ClrType);
-            });
-            Assert.Equal(typeof(ExampleEnum), schema.GetEnum<ExampleEnum>().ClrType);
-        }
+            sb.Enum(nameof(ExampleEnum));
+            sb.Object("Parent").Field<ExampleEnum>("field");
+            var def = sb.GetDefinition().GetEnum(nameof(ExampleEnum));
+            sb.Enum<ExampleEnum>();
+            Assert.Equal(typeof(ExampleEnum), def.ClrType);
+        });
+        Assert.Equal(typeof(ExampleEnum), schema.GetEnum<ExampleEnum>().ClrType);
     }
 }

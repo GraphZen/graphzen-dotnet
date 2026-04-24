@@ -5,17 +5,16 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Tests
+namespace GraphZen.TypeSystem.Tests;
+
+internal struct StringLiteral : IInspectable
 {
-    internal struct StringLiteral : IInspectable
+    public StringLiteral(string value)
     {
-        public StringLiteral(string value)
-        {
-            Value = value;
-        }
-
-        public string Value { get; set; }
-
-        public string GetDisplayValue() => Value;
+        Value = value;
     }
+
+    public string Value { get; set; }
+
+    public string GetDisplayValue() => Value;
 }

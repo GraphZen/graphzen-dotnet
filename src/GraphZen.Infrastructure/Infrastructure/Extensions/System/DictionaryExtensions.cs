@@ -9,67 +9,64 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.Infrastructure;
 
-
-namespace GraphZen.Infrastructure
+internal static class DictionaryExtensions
 {
-    internal static class DictionaryExtensions
+    public static ICollection<TItem> GetItems<TKey, TItem>(this IDictionary<TKey, ICollection<TItem>> dictionary,
+        TKey key)
     {
-        public static ICollection<TItem> GetItems<TKey, TItem>(this IDictionary<TKey, ICollection<TItem>> dictionary,
-            TKey key)
+        Check.NotNull(dictionary, nameof(dictionary));
+        Check.NotNull(key, nameof(key));
+        if (dictionary.TryGetValue(key, out var collection)) return collection;
+
+        return Enumerable.Empty<TItem>().ToList();
+    }
+
+    public static void AddItem<TKey, TItem>(this IDictionary<TKey, ICollection<TItem>> dictionary, TKey key,
+        TItem item)
+    {
+        Check.NotNull(dictionary, nameof(dictionary));
+        Check.NotNull(key, nameof(key));
+        if (dictionary.TryGetValue(key, out var collection))
+            collection.Add(item);
+        else
+            dictionary[key] = new List<TItem> { item };
+    }
+
+
+    public static IReadOnlyList<DictionaryEntry> GetEntries(this IDictionary dictionary)
+    {
+        Check.NotNull(dictionary, nameof(dictionary));
+        var entries = new List<DictionaryEntry>();
+        var enumerator = dictionary.GetEnumerator();
+        try
         {
-            Check.NotNull(dictionary, nameof(dictionary));
-            Check.NotNull(key, nameof(key));
-            if (dictionary.TryGetValue(key, out var collection)) return collection;
-
-            return Enumerable.Empty<TItem>().ToList();
-        }
-
-        public static void AddItem<TKey, TItem>(this IDictionary<TKey, ICollection<TItem>> dictionary, TKey key,
-            TItem item)
-        {
-            Check.NotNull(dictionary, nameof(dictionary));
-            Check.NotNull(key, nameof(key));
-            if (dictionary.TryGetValue(key, out var collection))
-                collection.Add(item);
-            else
-                dictionary[key] = new List<TItem> { item };
-        }
-
-
-        public static IReadOnlyList<DictionaryEntry> GetEntries(this IDictionary dictionary)
-        {
-            Check.NotNull(dictionary, nameof(dictionary));
-            var entries = new List<DictionaryEntry>();
-            var enumerator = dictionary.GetEnumerator();
-            try
+            while (enumerator.MoveNext())
             {
-                while (enumerator.MoveNext())
-                {
-                    entries.Add(enumerator.Entry);
-                }
+                entries.Add(enumerator.Entry);
             }
-            finally
-            {
-                (enumerator as IDisposable)?.Dispose();
-            }
-
-            return entries.AsReadOnly();
         }
-
-        internal static TValue? FindValueOrDefault<TKey, TValue>(
-            this IDictionary<TKey, TValue> dictionary, TKey key) where TValue : struct =>
-            dictionary.TryGetValue(key, out var val) ? val : null;
-
-
-        public static void Increment<TKey>(this IDictionary<TKey, int> dictionary, TKey key)
+        finally
         {
-            Check.NotNull(dictionary, nameof(dictionary));
-            Check.NotNull(key, nameof(key));
-            if (dictionary.TryGetValue(key, out var value))
-                dictionary[key] = value + 1;
-            else
-                dictionary.Add(key, 1);
+            (enumerator as IDisposable)?.Dispose();
         }
+
+        return entries.AsReadOnly();
+    }
+
+    internal static TValue? FindValueOrDefault<TKey, TValue>(
+        this IDictionary<TKey, TValue> dictionary, TKey key) where TValue : struct =>
+        dictionary.TryGetValue(key, out var val) ? val : null;
+
+
+    public static void Increment<TKey>(this IDictionary<TKey, int> dictionary, TKey key)
+    {
+        Check.NotNull(dictionary, nameof(dictionary));
+        Check.NotNull(key, nameof(key));
+        if (dictionary.TryGetValue(key, out var value))
+            dictionary[key] = value + 1;
+        else
+            dictionary.Add(key, 1);
     }
 }

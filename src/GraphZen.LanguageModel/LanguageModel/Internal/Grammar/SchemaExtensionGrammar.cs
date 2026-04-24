@@ -6,28 +6,25 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Superpower;
 
+namespace GraphZen.LanguageModel.Internal;
 
-
-namespace GraphZen.LanguageModel.Internal
+internal static partial class Grammar
 {
-    internal static partial class Grammar
-    {
-        /// <summary>
-        ///     http://facebook.github.io/graphql/June2018/#SchemaExtension
-        /// </summary>
-        private static TokenListParser<TokenKind, SchemaExtensionSyntax> SchemaExtension { get; } =
-            (from extend in Keyword("extend")
-             from schema in Keyword("schema")
-             from directives in Directives.AsNullable().OptionalOrDefault()
-             from lb in Parse.Ref(() => LeftBrace!)
-             from defs in OperationTypeDefinition!.Many()
-             from rb in RightBrace
-             select new SchemaExtensionSyntax(directives, defs!, SyntaxLocation.FromMany(extend, rb))).Try().Or(
-                from extend in Keyword("extend")
-                from schema in Keyword("schema")
-                from directives in Directives
-                select new SchemaExtensionSyntax(directives!, null,
-                    SyntaxLocation.FromMany(extend, directives!.GetLocation()))
-            ).Try().Named("schema extension");
-    }
+    /// <summary>
+    ///     http://facebook.github.io/graphql/June2018/#SchemaExtension
+    /// </summary>
+    private static TokenListParser<TokenKind, SchemaExtensionSyntax> SchemaExtension { get; } =
+        (from extend in Keyword("extend")
+            from schema in Keyword("schema")
+            from directives in Directives.AsNullable().OptionalOrDefault()
+            from lb in Parse.Ref(() => LeftBrace!)
+            from defs in OperationTypeDefinition!.Many()
+            from rb in RightBrace
+            select new SchemaExtensionSyntax(directives, defs!, SyntaxLocation.FromMany(extend, rb))).Try().Or(
+            from extend in Keyword("extend")
+            from schema in Keyword("schema")
+            from directives in Directives
+            select new SchemaExtensionSyntax(directives!, null,
+                SyntaxLocation.FromMany(extend, directives!.GetLocation()))
+        ).Try().Named("schema extension");
 }

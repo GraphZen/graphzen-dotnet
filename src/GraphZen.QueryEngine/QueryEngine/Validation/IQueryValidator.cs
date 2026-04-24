@@ -8,11 +8,9 @@ using GraphZen.LanguageModel;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 
+namespace GraphZen.QueryEngine.Validation;
 
-namespace GraphZen.QueryEngine.Validation
+public interface IQueryValidator
 {
-    public interface IQueryValidator
-    {
-        IReadOnlyCollection<GraphQLServerError> Validate(Schema schema, DocumentSyntax query);
-    }
+    IReadOnlyCollection<GraphQLServerError> Validate(Schema schema, DocumentSyntax query);
 }

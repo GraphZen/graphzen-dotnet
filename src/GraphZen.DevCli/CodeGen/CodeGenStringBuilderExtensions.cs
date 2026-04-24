@@ -6,22 +6,22 @@ using System.Text;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.CodeGen
+namespace GraphZen.CodeGen;
+
+public static class CodeGenStringBuilderExtensions
 {
-    public static class CodeGenStringBuilderExtensions
+    public static void AppendDictionaryAccessor(this StringBuilder csharp,
+        string containerType, string propertyName, string keyName, string keyType,
+        string valueName, string valueType)
     {
-        public static void AppendDictionaryAccessor(this StringBuilder csharp,
-            string containerType, string propertyName, string keyName, string keyType,
-            string valueName, string valueType)
-        {
-            var thisRefName = "source";
-            var valueNameCamelized = valueName.FirstCharToLower();
-            var valueRefName = valueType.FirstCharToLower();
-            // Strip leading 'I' prefix from interface names to avoid class names that look like interfaces
-            var classPrefix = containerType.Length > 1 && containerType[0] == 'I' && char.IsUpper(containerType[1])
-                ? containerType.Substring(1)
-                : containerType;
-            var code = $@"
+        var thisRefName = "source";
+        var valueNameCamelized = valueName.FirstCharToLower();
+        var valueRefName = valueType.FirstCharToLower();
+        // Strip leading 'I' prefix from interface names to avoid class names that look like interfaces
+        var classPrefix = containerType.Length > 1 && containerType[0] == 'I' && char.IsUpper(containerType[1])
+            ? containerType.Substring(1)
+            : containerType;
+        var code = $@"
 
  public static partial class {classPrefix}{propertyName}AccessorExtensions {{
 
@@ -43,7 +43,6 @@ namespace GraphZen.CodeGen
 
 
 ";
-            csharp.Append(code);
-        }
+        csharp.Append(code);
     }
 }

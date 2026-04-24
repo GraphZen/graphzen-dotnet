@@ -11,51 +11,50 @@ using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem
+namespace GraphZen.TypeSystem;
+
+[DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
+public class UnionTypeDefinition : NamedTypeDefinition, IMutableUnionTypeDefinition
 {
-    [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
-    public class UnionTypeDefinition : NamedTypeDefinition, IMutableUnionTypeDefinition
+    private readonly List<ObjectTypeDefinition> _types = new();
+
+
+    public UnionTypeDefinition(TypeIdentity identity, SchemaDefinition schema,
+        ConfigurationSource configurationSource)
+        : base(Check.NotNull(identity, nameof(identity)), Check.NotNull(schema, nameof(schema)),
+            configurationSource)
     {
-        private readonly List<ObjectTypeDefinition> _types = new List<ObjectTypeDefinition>();
+        Builder = new InternalUnionTypeBuilder(this, schema.Builder);
+        identity.Definition = this;
+    }
+
+    private string DebuggerDisplay => $"union {Name}";
 
 
-        public UnionTypeDefinition(TypeIdentity identity, SchemaDefinition schema,
-            ConfigurationSource configurationSource)
-            : base(Check.NotNull(identity, nameof(identity)), Check.NotNull(schema, nameof(schema)),
-                configurationSource)
-        {
-            Builder = new InternalUnionTypeBuilder(this, schema.Builder);
-            identity.Definition = this;
-        }
-
-        private string DebuggerDisplay => $"union {Name}";
+    public InternalUnionTypeBuilder Builder { get; }
 
 
-        public InternalUnionTypeBuilder Builder { get; }
+    public IEnumerable<ObjectTypeDefinition> GetMemberTypes() => _types;
+
+    public ConfigurationSource? FindIgnoredMemberTypeConfigurationSource(string name) =>
+        throw new NotImplementedException();
+
+    public TypeResolver<object, GraphQLContext>? ResolveType { get; set; }
+
+    public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Union;
 
 
-        public IEnumerable<ObjectTypeDefinition> GetMemberTypes() => _types;
+    public override TypeKind Kind { get; } = TypeKind.Union;
 
-        public ConfigurationSource? FindIgnoredMemberTypeConfigurationSource(string name) =>
-            throw new NotImplementedException();
-
-        public TypeResolver<object, GraphQLContext>? ResolveType { get; set; }
-
-        public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Union;
+    IEnumerable<IObjectTypeDefinition> IMemberTypesDefinition.GetMemberTypes() => GetMemberTypes();
 
 
-        public override TypeKind Kind { get; } = TypeKind.Union;
-
-
-        public void AddType(ObjectTypeDefinition type)
-        {
-            Check.NotNull(type, nameof(type));
-            if (type.Name == null)
-                throw new ArgumentException(
-                    $"Cannot include {type} in {Name} union type definition unless a name is defined");
-            if (!_types.Contains(type)) _types.Add(type);
-        }
-
-        IEnumerable<IObjectTypeDefinition> IMemberTypesDefinition.GetMemberTypes() => GetMemberTypes();
+    public void AddType(ObjectTypeDefinition type)
+    {
+        Check.NotNull(type, nameof(type));
+        if (type.Name == null)
+            throw new ArgumentException(
+                $"Cannot include {type} in {Name} union type definition unless a name is defined");
+        if (!_types.Contains(type)) _types.Add(type);
     }
 }

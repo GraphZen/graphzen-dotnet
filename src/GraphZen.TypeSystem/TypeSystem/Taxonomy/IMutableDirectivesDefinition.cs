@@ -7,17 +7,16 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
+namespace GraphZen.TypeSystem.Taxonomy;
+
+[GraphQLIgnore]
+public interface IMutableDirectivesDefinition : IDirectivesDefinition
 {
     [GraphQLIgnore]
-    public interface IMutableDirectivesDefinition : IDirectivesDefinition
-    {
-        [GraphQLIgnore]
-        new IEnumerable<DirectiveDefinition> GetDirectives();
+    new IEnumerable<DirectiveDefinition> GetDirectives();
 
-        bool RenameDirective(DirectiveDefinition directive, string name, ConfigurationSource configurationSource);
+    bool RenameDirective(DirectiveDefinition directive, string name, ConfigurationSource configurationSource);
 
 
-        ConfigurationSource? FindIgnoredDirectiveConfigurationSource(string name);
-    }
+    ConfigurationSource? FindIgnoredDirectiveConfigurationSource(string name);
 }

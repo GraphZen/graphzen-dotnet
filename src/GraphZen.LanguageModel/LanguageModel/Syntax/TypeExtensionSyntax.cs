@@ -5,20 +5,17 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.LanguageModel;
 
-
-namespace GraphZen.LanguageModel
+/// <summary>
+///     Type extension
+///     http://facebook.github.io/graphql/June2018/#TypeExtension
+/// </summary>
+public abstract class TypeExtensionSyntax : TypeSystemExtensionSyntax, INamedSyntax
 {
-    /// <summary>
-    ///     Type extension
-    ///     http://facebook.github.io/graphql/June2018/#TypeExtension
-    /// </summary>
-    public abstract class TypeExtensionSyntax : TypeSystemExtensionSyntax, INamedSyntax
+    protected TypeExtensionSyntax(SyntaxLocation? location) : base(location)
     {
-        protected TypeExtensionSyntax(SyntaxLocation? location) : base(location)
-        {
-        }
-
-        public abstract NameSyntax Name { get; }
     }
+
+    public abstract NameSyntax Name { get; }
 }

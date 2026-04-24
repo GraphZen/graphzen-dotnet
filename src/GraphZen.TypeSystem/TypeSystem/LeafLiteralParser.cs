@@ -7,8 +7,7 @@ using GraphZen.Internal;
 using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem
-{
-    public delegate Maybe<TScalar> LeafLiteralParser<TScalar, in TValueNode>(TValueNode valueNode)
-        where TValueNode : ValueSyntax;
-}
+namespace GraphZen.TypeSystem;
+
+public delegate Maybe<TScalar> LeafLiteralParser<TScalar, in TValueNode>(TValueNode valueNode)
+    where TValueNode : ValueSyntax;

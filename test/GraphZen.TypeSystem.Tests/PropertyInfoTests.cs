@@ -7,37 +7,35 @@ using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 using Xunit;
 
+namespace GraphZen.TypeSystem.Tests;
 
-namespace GraphZen.TypeSystem.Tests
+[NoReorder]
+public class PropertyInfoTests
 {
-    [NoReorder]
-    public class PropertyInfoTests
+    public abstract class FooBase
     {
-        public abstract class FooBase
-        {
-            public string BaseProperty { get; set; } = null!;
+        public string BaseProperty { get; set; } = null!;
 
-            [GraphQLCanBeNull] public string? NullableBaseProperty { get; set; }
-        }
+        [GraphQLCanBeNull] public string? NullableBaseProperty { get; set; }
+    }
 
 
-        public class Foo : FooBase
-        {
-            public string Bar { get; set; } = null!;
+    public class Foo : FooBase
+    {
+        public string Bar { get; set; } = null!;
 
-            [GraphQLCanBeNull] public string? NullableBar { get; set; }
-        }
+        [GraphQLCanBeNull] public string? NullableBar { get; set; }
+    }
 
-        [Theory]
-        [InlineData(nameof(Foo.Bar), false)]
-        [InlineData(nameof(Foo.NullableBar), true)]
-        [InlineData(nameof(Foo.BaseProperty), false)]
-        [InlineData(nameof(Foo.NullableBaseProperty), true)]
-        public void PropertyNullability(string propertyName, bool excpectCanBeNull)
-        {
-            var property = typeof(Foo).GetProperty(propertyName)!;
-            var canBeNull = property.CanBeNull();
-            Assert.Equal(excpectCanBeNull, canBeNull);
-        }
+    [Theory]
+    [InlineData(nameof(Foo.Bar), false)]
+    [InlineData(nameof(Foo.NullableBar), true)]
+    [InlineData(nameof(Foo.BaseProperty), false)]
+    [InlineData(nameof(Foo.NullableBaseProperty), true)]
+    public void PropertyNullability(string propertyName, bool excpectCanBeNull)
+    {
+        var property = typeof(Foo).GetProperty(propertyName)!;
+        var canBeNull = property.CanBeNull();
+        Assert.Equal(excpectCanBeNull, canBeNull);
     }
 }

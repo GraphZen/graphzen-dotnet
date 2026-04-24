@@ -5,18 +5,15 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.LanguageModel;
 
-
-namespace GraphZen.LanguageModel
+public interface IParser
 {
-    public interface IParser
-    {
-        DocumentSyntax ParseDocument(string document);
+    DocumentSyntax ParseDocument(string document);
 
 
-        ValueSyntax ParseValue(string value);
+    ValueSyntax ParseValue(string value);
 
 
-        TypeSyntax ParseType(string type);
-    }
+    TypeSyntax ParseType(string type);
 }

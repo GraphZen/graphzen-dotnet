@@ -5,12 +5,9 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.LanguageModel;
 
-
-namespace GraphZen.LanguageModel
+public interface INamedSyntax
 {
-    public interface INamedSyntax
-    {
-        NameSyntax Name { get; }
-    }
+    NameSyntax Name { get; }
 }

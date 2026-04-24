@@ -6,9 +6,8 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem
-{
-    public delegate TResult Resolver<in TSource, out TResult>(TSource source, dynamic args,
-        GraphQLContext context,
-        ResolveInfo resolveInfo);
-}
+namespace GraphZen.TypeSystem;
+
+public delegate TResult Resolver<in TSource, out TResult>(TSource source, dynamic args,
+    GraphQLContext context,
+    ResolveInfo resolveInfo);

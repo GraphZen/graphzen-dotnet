@@ -7,33 +7,31 @@ using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
+namespace GraphZen.TypeSystem;
 
-namespace GraphZen.TypeSystem
+public class DefaultIDirectiveAnnotationSyntaxConverter : SyntaxConverter
 {
-    public class DefaultIDirectiveAnnotationSyntaxConverter : SyntaxConverter
+    public override bool CanRead { get; } = true;
+    public override bool CanWrite { get; } = true;
+
+    public override object? FromSyntax(SyntaxNode node)
     {
-        public override bool CanRead { get; } = true;
-        public override bool CanWrite { get; } = true;
+        if (node is DirectiveSyntax directive) return new DirectiveAnnotation(directive.Name.Value, directive);
 
-        public override object? FromSyntax(SyntaxNode node)
+        return null;
+    }
+
+    public override SyntaxNode? ToSyntax(object value)
+    {
+        if (value is IDirectiveAnnotation annotation)
         {
-            if (node is DirectiveSyntax directive) return new DirectiveAnnotation(directive.Name.Value, directive);
+            if (annotation.Value is DirectiveSyntax syntax) return syntax;
+            // TODO: lookup directive in schema based on name, get values from value, create syntax (AstFromValue)
 
-            return null;
+            // Default: return simple directive annotation w/name only
+            return new DirectiveSyntax(SyntaxFactory.Name(annotation.Name));
         }
 
-        public override SyntaxNode? ToSyntax(object value)
-        {
-            if (value is IDirectiveAnnotation annotation)
-            {
-                if (annotation.Value is DirectiveSyntax syntax) return syntax;
-                // TODO: lookup directive in schema based on name, get values from value, create syntax (AstFromValue)
-
-                // Default: return simple directive annotation w/name only
-                return new DirectiveSyntax(SyntaxFactory.Name(annotation.Name));
-            }
-
-            return null;
-        }
+        return null;
     }
 }

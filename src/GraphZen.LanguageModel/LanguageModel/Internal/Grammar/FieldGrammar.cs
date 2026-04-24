@@ -7,33 +7,30 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Superpower;
 
+namespace GraphZen.LanguageModel.Internal;
 
-
-namespace GraphZen.LanguageModel.Internal
+internal static partial class Grammar
 {
-    internal static partial class Grammar
-    {
-        internal static TokenListParser<TokenKind, FieldSyntax> Field { get; } =
-            (from firstName in Parse.Ref(() => Name!.AsNullable().OptionalOrDefault())
-             from aliasedName in (from colon in Colon
-                                  from aliasedName in Name!
-                                  select aliasedName).AsNullable().OptionalOrDefault()
-             from arguments in Arguments!.AsNullable().OptionalOrDefault().Named("field arguments")
-             from directives in Directives.AsNullable().OptionalOrDefault().Named("field directives")
-             from selectionSet in SelectionSet!.AsNullable().OptionalOrDefault().Named("field selections")
-             let alias = aliasedName != null ? firstName : null
-             let name = aliasedName ?? firstName
-             where firstName != null
-             select new FieldSyntax(name!,
-                 alias,
-                 arguments,
-                 directives,
-                 selectionSet,
-                 SyntaxLocation.FromMany(alias!, name!, arguments?.GetLocation(),
-                     selectionSet,
-                     directives?.GetLocation()
-                 )))
-            .Try()
-            .Named("field");
-    }
+    internal static TokenListParser<TokenKind, FieldSyntax> Field { get; } =
+        (from firstName in Parse.Ref(() => Name!.AsNullable().OptionalOrDefault())
+            from aliasedName in (from colon in Colon
+                from aliasedName in Name!
+                select aliasedName).AsNullable().OptionalOrDefault()
+            from arguments in Arguments!.AsNullable().OptionalOrDefault().Named("field arguments")
+            from directives in Directives.AsNullable().OptionalOrDefault().Named("field directives")
+            from selectionSet in SelectionSet!.AsNullable().OptionalOrDefault().Named("field selections")
+            let alias = aliasedName != null ? firstName : null
+            let name = aliasedName ?? firstName
+            where firstName != null
+            select new FieldSyntax(name!,
+                alias,
+                arguments,
+                directives,
+                selectionSet,
+                SyntaxLocation.FromMany(alias!, name!, arguments?.GetLocation(),
+                    selectionSet,
+                    directives?.GetLocation()
+                )))
+        .Try()
+        .Named("field");
 }

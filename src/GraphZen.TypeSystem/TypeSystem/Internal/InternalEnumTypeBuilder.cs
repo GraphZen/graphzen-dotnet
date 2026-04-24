@@ -7,111 +7,110 @@ using System.Reflection;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Internal
+namespace GraphZen.TypeSystem.Internal;
+
+public class InternalEnumTypeBuilder : AnnotatableMemberDefinitionBuilder<EnumTypeDefinition>
 {
-    public class InternalEnumTypeBuilder : AnnotatableMemberDefinitionBuilder<EnumTypeDefinition>
+    public InternalEnumTypeBuilder(EnumTypeDefinition definition, InternalSchemaBuilder schemaBuilder)
+        : base(definition, schemaBuilder)
     {
-        public InternalEnumTypeBuilder(EnumTypeDefinition definition, InternalSchemaBuilder schemaBuilder)
-            : base(definition, schemaBuilder)
+    }
+
+
+    public InternalEnumValueBuilder? Value(object value, ConfigurationSource configurationSource)
+    {
+        var nameConfigurationSource = ConfigurationSource.Explicit;
+        string? name;
+        MemberInfo? enumMember = default;
+        if (value is string strValue)
         {
+            name = strValue;
+        }
+        else if (!value.GetType().IsEnum)
+        {
+            throw new InvalidOperationException(
+                $"Enum values can only be configured with string values or CLR enum values. The provided type was '{value.GetType()}'");
+        }
+        else
+        {
+            enumMember = GetMemberInfo(value.GetType(), value.ToString()!);
+            (name, nameConfigurationSource) = enumMember.GetGraphQLNameForEnumValue();
+            if (enumMember.IsIgnoredByDataAnnotation()) IgnoreValue(name, ConfigurationSource.DataAnnotation);
         }
 
+        if (IsValueIgnored(name, configurationSource)) return null;
 
-        public InternalEnumValueBuilder? Value(object value, ConfigurationSource configurationSource)
+        var enumValue = Definition.FindValue(name);
+        if (enumValue is null)
         {
-            var nameConfigurationSource = ConfigurationSource.Explicit;
-            string? name;
-            MemberInfo? enumMember = default;
-            if (value is string strValue)
-            {
-                name = strValue;
-            }
-            else if (!value.GetType().IsEnum)
-            {
-                throw new InvalidOperationException(
-                    $"Enum values can only be configured with string values or CLR enum values. The provided type was '{value.GetType()}'");
-            }
-            else
-            {
-                enumMember = GetMemberInfo(value.GetType(), value.ToString()!);
-                (name, nameConfigurationSource) = enumMember.GetGraphQLNameForEnumValue();
-                if (enumMember.IsIgnoredByDataAnnotation()) IgnoreValue(name, ConfigurationSource.DataAnnotation);
-            }
-
-            if (IsValueIgnored(name, configurationSource)) return null;
-
-            var enumValue = Definition.FindValue(name);
-            if (enumValue is null)
-            {
-                enumValue = Definition.AddValue(name, configurationSource, nameConfigurationSource);
-            }
-            else
-            {
-                enumValue.UpdateConfigurationSource(configurationSource);
-                enumValue.SetName(name, nameConfigurationSource);
-            }
-
-            var builder = new InternalEnumValueBuilder(enumValue, SchemaBuilder);
-            if (enumMember != null)
-            {
-                builder.CustomValue(value);
-                if (enumMember.TryGetDescriptionFromDataAnnotation(out var desc))
-                    builder.Description(desc, ConfigurationSource.DataAnnotation);
-            }
-
-            return builder;
+            enumValue = Definition.AddValue(name, configurationSource, nameConfigurationSource);
+        }
+        else
+        {
+            enumValue.UpdateConfigurationSource(configurationSource);
+            enumValue.SetName(name, nameConfigurationSource);
         }
 
-        public InternalEnumTypeBuilder ClrType(Type clrType, ConfigurationSource configurationSource)
+        var builder = new InternalEnumValueBuilder(enumValue, SchemaBuilder);
+        if (enumMember != null)
         {
-            if (Definition.SetClrType(clrType, configurationSource)) ConfigureEnumFromClrType();
-            return this;
+            builder.CustomValue(value);
+            if (enumMember.TryGetDescriptionFromDataAnnotation(out var desc))
+                builder.Description(desc, ConfigurationSource.DataAnnotation);
         }
 
-        public bool IsValueIgnored(string name, ConfigurationSource configurationSource) =>
-            !configurationSource.Overrides(Definition.FindIgnoredValueConfigurationSource(name));
+        return builder;
+    }
 
-        public bool ConfigureEnumFromClrType()
+    public InternalEnumTypeBuilder ClrType(Type clrType, ConfigurationSource configurationSource)
+    {
+        if (Definition.SetClrType(clrType, configurationSource)) ConfigureEnumFromClrType();
+        return this;
+    }
+
+    public bool IsValueIgnored(string name, ConfigurationSource configurationSource) =>
+        !configurationSource.Overrides(Definition.FindIgnoredValueConfigurationSource(name));
+
+    public bool ConfigureEnumFromClrType()
+    {
+        var clrType = Definition.ClrType;
+        if (clrType == null) return false;
+
+        if (clrType.TryGetDescriptionFromDataAnnotation(out var desc))
+            Definition.SetDescription(desc, ConfigurationSource.DataAnnotation);
+
+        foreach (var value in Enum.GetValues(clrType))
         {
-            var clrType = Definition.ClrType;
-            if (clrType == null) return false;
-
-            if (clrType.TryGetDescriptionFromDataAnnotation(out var desc))
-                Definition.SetDescription(desc, ConfigurationSource.DataAnnotation);
-
-            foreach (var value in Enum.GetValues(clrType))
-            {
-                Value(value!, ConfigurationSource.Convention);
-            }
-
-            return true;
+            Value(value!, ConfigurationSource.Convention);
         }
 
-        private static MemberInfo GetMemberInfo(Type clrEnumType, string memberName) =>
-            clrEnumType.GetMember(memberName)[0];
+        return true;
+    }
 
-        private static string GetName(object value)
-        {
-            if (value is string strValue) return strValue;
+    private static MemberInfo GetMemberInfo(Type clrEnumType, string memberName) =>
+        clrEnumType.GetMember(memberName)[0];
 
-            var enumMember = GetMemberInfo(value.GetType(), value.ToString()!);
-            var (name, _) = enumMember.GetGraphQLNameForEnumValue();
-            return name;
-        }
+    private static string GetName(object value)
+    {
+        if (value is string strValue) return strValue;
+
+        var enumMember = GetMemberInfo(value.GetType(), value.ToString()!);
+        var (name, _) = enumMember.GetGraphQLNameForEnumValue();
+        return name;
+    }
 
 
-        public InternalEnumTypeBuilder IgnoreValue(object value, ConfigurationSource configurationSource)
-        {
-            var name = GetName(value);
-            Definition.IgnoreValue(name, configurationSource);
-            return this;
-        }
+    public InternalEnumTypeBuilder IgnoreValue(object value, ConfigurationSource configurationSource)
+    {
+        var name = GetName(value);
+        Definition.IgnoreValue(name, configurationSource);
+        return this;
+    }
 
-        public InternalEnumTypeBuilder UnignoreValue(object value, ConfigurationSource configurationSource)
-        {
-            var name = GetName(value);
-            Definition.UnignoreValue(name, configurationSource);
-            return this;
-        }
+    public InternalEnumTypeBuilder UnignoreValue(object value, ConfigurationSource configurationSource)
+    {
+        var name = GetName(value);
+        Definition.UnignoreValue(name, configurationSource);
+        return this;
     }
 }

@@ -9,41 +9,41 @@ using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.QueryEngine.Validation.Rules.FragmentsOnCompositeTypes;
 
-namespace GraphZen.Tests.Validation.Rules
-{
-    [NoReorder]
-    public class FragmentsOnCompositeTypesTests : ValidationRuleHarness
-    {
-        public override ValidationRule RuleUnderTest { get; } = QueryValidationRules.FragmentsOnCompositeTypes;
+namespace GraphZen.Tests.Validation.Rules;
 
-        [Fact]
-        public void ObjectIsValidFragmentType()
-        {
-            QueryShouldPass(@"
+[NoReorder]
+public class FragmentsOnCompositeTypesTests : ValidationRuleHarness
+{
+    public override ValidationRule RuleUnderTest { get; } = QueryValidationRules.FragmentsOnCompositeTypes;
+
+    [Fact]
+    public void ObjectIsValidFragmentType()
+    {
+        QueryShouldPass(@"
 
           fragment validFragment on Dog {
             barks
           }
 
         ");
-        }
+    }
 
-        [Fact]
-        public void InterfaceIsValidFragmentType()
-        {
-            QueryShouldPass(@"
+    [Fact]
+    public void InterfaceIsValidFragmentType()
+    {
+        QueryShouldPass(@"
 
           fragment validFragment on Pet {
             name
           }
 
         ");
-        }
+    }
 
-        [Fact]
-        public void ObjectIsValidInlineFragmentType()
-        {
-            QueryShouldPass(@"
+    [Fact]
+    public void ObjectIsValidInlineFragmentType()
+    {
+        QueryShouldPass(@"
 
           fragment validFragment on Pet {
             ... on Dog {
@@ -52,13 +52,13 @@ namespace GraphZen.Tests.Validation.Rules
           }
 
         ");
-        }
+    }
 
 
-        [Fact]
-        public void InlineFragmentWithoutTypeIsValid()
-        {
-            QueryShouldPass(@"
+    [Fact]
+    public void InlineFragmentWithoutTypeIsValid()
+    {
+        QueryShouldPass(@"
 
           fragment validFragment on Pet {
             ... {
@@ -67,65 +67,65 @@ namespace GraphZen.Tests.Validation.Rules
           }
 
         ");
-        }
+    }
 
-        [Fact]
-        public void UnionIsValidFragmentType()
-        {
-            QueryShouldPass(@"
+    [Fact]
+    public void UnionIsValidFragmentType()
+    {
+        QueryShouldPass(@"
 
           fragment validFragment on CatOrDog {
             __typename
           }
 
         ");
-        }
+    }
 
-        private static ExpectedError Error(string fragmentName, string typeName, int line, int column) =>
-            Error(
-                FragmentOnNonCompositeErrorMessage(fragmentName, typeName), (line, column));
+    private static ExpectedError Error(string fragmentName, string typeName, int line, int column) =>
+        Error(
+            FragmentOnNonCompositeErrorMessage(fragmentName, typeName), (line, column));
 
 
-        [Fact]
-        public void ScalarIsInvalidFragmentType()
-        {
-            QueryShouldFail(@"
+    [Fact]
+    public void ScalarIsInvalidFragmentType()
+    {
+        QueryShouldFail(@"
 
           fragment scalarFragment on Boolean {
             bad
           }
 
         ", Error("scalarFragment", "Boolean", 3, 38));
-        }
+    }
 
-        [Fact]
-        public void EnumIsInvalidFragmentType()
-        {
-            QueryShouldFail(@"
+    [Fact]
+    public void EnumIsInvalidFragmentType()
+    {
+        QueryShouldFail(@"
 
           fragment scalarFragment on FurColor {
             bad
           }
 
         ", Error("scalarFragment", "FurColor", 3, 38));
-        }
+    }
 
-        [Fact]
-        public void InputObjectIsInvalidInlineFragmentType()
-        {
-            QueryShouldFail(@"
+    [Fact]
+    public void InputObjectIsInvalidInlineFragmentType()
+    {
+        QueryShouldFail(@"
 
           fragment inputFragment on ComplexInput {
             stringField
           }
 
         ", Error("inputFragment", "ComplexInput", 3, 37));
-        }
+    }
 
-        [Fact]
-        public void ScalarIsInvalidInlineFragmentType()
-        {
-            QueryShouldFail(@"
+    [Fact]
+    public void ScalarIsInvalidInlineFragmentType()
+    {
+        QueryShouldFail(@"
 
           fragment invalidFragment on Pet {
             ... on String {
@@ -134,6 +134,5 @@ namespace GraphZen.Tests.Validation.Rules
           }
 
         ", Error(InlineFragmentOnNonCompositeErrorMessage("String"), (4, 20)));
-        }
     }
 }

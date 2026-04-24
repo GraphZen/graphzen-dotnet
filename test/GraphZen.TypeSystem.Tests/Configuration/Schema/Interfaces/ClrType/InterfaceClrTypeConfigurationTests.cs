@@ -6,41 +6,40 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace GraphZen.TypeSystem.Tests.Configuration.Interfaces.ClrType
+namespace GraphZen.TypeSystem.Tests.Configuration.Interfaces.ClrType;
+
+[NoReorder]
+public class InterfaceClrTypeConfigurationTests
 {
-    [NoReorder]
-    public class InterfaceClrTypeConfigurationTests
+    public interface IExampleInterface
     {
-        public interface IExampleInterface
-        {
-        }
+    }
 
-        [Fact]
-        public void interface_added_explicitly_subsequently_referenced_by_matching_clr_type_should_have_clr_type_set()
+    [Fact]
+    public void interface_added_explicitly_subsequently_referenced_by_matching_clr_type_should_have_clr_type_set()
+    {
+        var schema = Schema.Create(sb =>
         {
-            var schema = Schema.Create(sb =>
-            {
-                sb.Interface(nameof(IExampleInterface));
-                var def = sb.GetDefinition().GetInterface(nameof(IExampleInterface));
-                sb.Interface<IExampleInterface>();
-                Assert.Equal(typeof(IExampleInterface), def.ClrType);
-            });
-            Assert.Equal(typeof(IExampleInterface), schema.GetInterface<IExampleInterface>().ClrType);
-        }
+            sb.Interface(nameof(IExampleInterface));
+            var def = sb.GetDefinition().GetInterface(nameof(IExampleInterface));
+            sb.Interface<IExampleInterface>();
+            Assert.Equal(typeof(IExampleInterface), def.ClrType);
+        });
+        Assert.Equal(typeof(IExampleInterface), schema.GetInterface<IExampleInterface>().ClrType);
+    }
 
-        [Fact]
-        public void
-            interface_added_explicitly_subsequently_referenced_by_matching_clr_type_via_field_should_have_clr_type_set()
+    [Fact]
+    public void
+        interface_added_explicitly_subsequently_referenced_by_matching_clr_type_via_field_should_have_clr_type_set()
+    {
+        var schema = Schema.Create(sb =>
         {
-            var schema = Schema.Create(sb =>
-            {
-                sb.Interface(nameof(IExampleInterface));
-                sb.Object("Object").Field<IExampleInterface>("field");
-                var def = sb.GetDefinition().GetInterface(nameof(IExampleInterface));
-                sb.Interface<IExampleInterface>();
-                Assert.Equal(typeof(IExampleInterface), def.ClrType);
-            });
-            Assert.Equal(typeof(IExampleInterface), schema.GetInterface<IExampleInterface>().ClrType);
-        }
+            sb.Interface(nameof(IExampleInterface));
+            sb.Object("Object").Field<IExampleInterface>("field");
+            var def = sb.GetDefinition().GetInterface(nameof(IExampleInterface));
+            sb.Interface<IExampleInterface>();
+            Assert.Equal(typeof(IExampleInterface), def.ClrType);
+        });
+        Assert.Equal(typeof(IExampleInterface), schema.GetInterface<IExampleInterface>().ClrType);
     }
 }

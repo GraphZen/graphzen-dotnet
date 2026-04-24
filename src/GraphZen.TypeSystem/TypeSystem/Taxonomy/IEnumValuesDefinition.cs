@@ -6,11 +6,10 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
+namespace GraphZen.TypeSystem.Taxonomy;
+
+[GraphQLIgnore]
+public interface IEnumValuesDefinition
 {
-    [GraphQLIgnore]
-    public interface IEnumValuesDefinition
-    {
-        IEnumerable<IEnumValueDefinition> GetValues();
-    }
+    IEnumerable<IEnumValueDefinition> GetValues();
 }

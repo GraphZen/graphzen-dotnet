@@ -6,14 +6,13 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace GraphZen.TypeSystem.Tests
+namespace GraphZen.TypeSystem.Tests;
+
+public class CoreOptionsExtensionTests
 {
-    public class CoreOptionsExtensionTests
+    [Fact]
+    public void it_should_have_default_constructor()
     {
-        [Fact]
-        public void it_should_have_default_constructor()
-        {
-            Assert.NotNull(new CoreOptionsExtension());
-        }
+        Assert.NotNull(new CoreOptionsExtension());
     }
 }

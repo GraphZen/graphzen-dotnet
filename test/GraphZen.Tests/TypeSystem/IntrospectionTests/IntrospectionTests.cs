@@ -11,51 +11,49 @@ using GraphZen.Utilities;
 using JetBrains.Annotations;
 using Xunit;
 
+namespace GraphZen.Tests.TypeSystem.IntrospectionTests;
 
-namespace GraphZen.Tests.TypeSystem.IntrospectionTests
+[NoReorder]
+public class IntrospectionTests : ExecutorHarness
 {
-    [NoReorder]
-    public class IntrospectionTests : ExecutorHarness
+    [Fact]
+    public void IntrospectionSchemaContainsExpectedTypes()
     {
-        [Fact]
-        public void IntrospectionSchemaContainsExpectedTypes()
+        var expectedIntrospectionTypes = new[]
         {
-            var expectedIntrospectionTypes = new[]
-            {
-                "__Directive", "__DirectiveLocation", "__EnumValue", "__Field", "__InputValue", "__Schema", "__Type",
-                "__TypeKind"
-            };
-            var introspectionTypeNames = Introspection.IntrospectionTypes.Select(_ => _.Name).ToArray();
+            "__Directive", "__DirectiveLocation", "__EnumValue", "__Field", "__InputValue", "__Schema", "__Type",
+            "__TypeKind"
+        };
+        var introspectionTypeNames = Introspection.IntrospectionTypes.Select(_ => _.Name).ToArray();
 
-            Assert.Equivalent(expectedIntrospectionTypes, introspectionTypeNames);
+        Assert.Equivalent(expectedIntrospectionTypes, introspectionTypeNames);
 
-            Assert.Equal(expectedIntrospectionTypes.Length + SpecScalars.All.Count,
-                Introspection.Schema.GetTypes().Count());
-        }
+        Assert.Equal(expectedIntrospectionTypes.Length + SpecScalars.All.Count,
+            Introspection.Schema.GetTypes().Count());
+    }
 
 
-        [Fact]
-        public async Task ItExecutesIntrospectionQuery()
+    [Fact]
+    public async Task ItExecutesIntrospectionQuery()
+    {
+        var schema = Schema.Create(_ =>
         {
-            var schema = Schema.Create(_ =>
-            {
-                _.Object("QueryRoot").Field("onlyField", "String");
-                _.QueryType("QueryRoot");
-            });
+            _.Object("QueryRoot").Field("onlyField", "String");
+            _.QueryType("QueryRoot");
+        });
 
-            var query = Helpers.IntrospectionQuery(false);
-            await ExecuteAsync(schema, query, throwOnError: true)
-                .ShouldEqualJsonFile("./TypeSystem/IntrospectionTests/introspection-expected-result.json",
-                    new JsonDiffOptions
+        var query = Helpers.IntrospectionQuery(false);
+        await ExecuteAsync(schema, query, throwOnError: true)
+            .ShouldEqualJsonFile("./TypeSystem/IntrospectionTests/introspection-expected-result.json",
+                new JsonDiffOptions
+                {
+                    SortBeforeCompare = true,
+                    StringDiffOptions =
                     {
-                        SortBeforeCompare = true,
-                        StringDiffOptions =
-                        {
-                            ShowExpected = false,
-                            ShowActual = false,
-                            ShowDiffs = true
-                        }
-                    });
-        }
+                        ShowExpected = false,
+                        ShowActual = false,
+                        ShowDiffs = true
+                    }
+                });
     }
 }

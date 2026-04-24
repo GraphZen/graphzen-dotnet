@@ -6,10 +6,9 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Tests.Configuration.Scalars.Description
+namespace GraphZen.TypeSystem.Tests.Configuration.Scalars.Description;
+
+// ReSharper disable once InconsistentNaming
+public class Scalar_Explicit_Description : Scalar_Description, ILeafExplicitConfigurationFixture
 {
-    // ReSharper disable once InconsistentNaming
-    public class Scalar_Explicit_Description : Scalar_Description, ILeafExplicitConfigurationFixture
-    {
-    }
 }

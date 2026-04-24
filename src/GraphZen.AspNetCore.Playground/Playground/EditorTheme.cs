@@ -5,11 +5,10 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.Playground
+namespace GraphZen.Playground;
+
+public enum EditorTheme
 {
-    public enum EditorTheme
-    {
-        Dark,
-        Light
-    }
+    Dark,
+    Light
 }

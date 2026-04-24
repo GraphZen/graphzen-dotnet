@@ -7,29 +7,28 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using SimpleBlog.Models;
 
-namespace SimpleBlog
-{
-    public static class FakeBlogData
-    {
-        public static List<Post> Posts { get; } = new List<Post>
-        {
-            new Post {Id = 1, Author = "Jane", Title = "My first blog post", Content = "This is my first blog post."},
-            new Post {Id = 2, Author = "Jane", Title = "Follow up post", Content = "This blog is really fun!"},
-            new Post
-            {
-                Id = 3, Author = "Gene", Title = "Guest post",
-                Content = "Jane has let me write a guest post for her blog."
-            }
-        };
+namespace SimpleBlog;
 
-        public static List<Comment> Comments { get; } = new List<Comment>
+public static class FakeBlogData
+{
+    public static List<Post> Posts { get; } = new()
+    {
+        new Post { Id = 1, Author = "Jane", Title = "My first blog post", Content = "This is my first blog post." },
+        new Post { Id = 2, Author = "Jane", Title = "Follow up post", Content = "This blog is really fun!" },
+        new Post
         {
-            new Comment
-            {
-                Id = 1, PostId = 1, Author = "Gene", Content = "I'm glad you've decided to start blogging, Jane."
-            },
-            new Comment {Id = 2, PostId = 1, Author = "Syed", Content = "Have you thought about doing a podcast?"},
-            new Comment {Id = 3, PostId = 2, Author = "Gene", Content = "This was a fun blog post."}
-        };
-    }
+            Id = 3, Author = "Gene", Title = "Guest post",
+            Content = "Jane has let me write a guest post for her blog."
+        }
+    };
+
+    public static List<Comment> Comments { get; } = new()
+    {
+        new Comment
+        {
+            Id = 1, PostId = 1, Author = "Gene", Content = "I'm glad you've decided to start blogging, Jane."
+        },
+        new Comment { Id = 2, PostId = 1, Author = "Syed", Content = "Have you thought about doing a podcast?" },
+        new Comment { Id = 3, PostId = 2, Author = "Gene", Content = "This was a fun blog post." }
+    };
 }

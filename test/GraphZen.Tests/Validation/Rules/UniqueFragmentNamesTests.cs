@@ -7,13 +7,10 @@ using GraphZen.LanguageModel.Validation;
 using GraphZen.QueryEngine.Validation;
 using JetBrains.Annotations;
 
+namespace GraphZen.Tests.Validation.Rules;
 
-
-namespace GraphZen.Tests.Validation.Rules
+[NoReorder]
+public class UniqueFragmentNamesTests : ValidationRuleHarness
 {
-    [NoReorder]
-    public class UniqueFragmentNamesTests : ValidationRuleHarness
-    {
-        public override ValidationRule RuleUnderTest { get; } = QueryValidationRules.UniqueFragmentNames;
-    }
+    public override ValidationRule RuleUnderTest { get; } = QueryValidationRules.UniqueFragmentNames;
 }

@@ -7,16 +7,15 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.Infrastructure
+namespace GraphZen.Infrastructure;
+
+internal static class ConcurrentBagExtensions
 {
-    internal static class ConcurrentBagExtensions
+    public static void AddRange<T>(this ConcurrentBag<T> bag, IEnumerable<T> items)
     {
-        public static void AddRange<T>(this ConcurrentBag<T> bag, IEnumerable<T> items)
+        foreach (var item in items)
         {
-            foreach (var item in items)
-            {
-                bag.Add(item);
-            }
+            bag.Add(item);
         }
     }
 }

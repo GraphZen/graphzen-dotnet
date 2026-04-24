@@ -7,12 +7,10 @@ using GraphZen.LanguageModel.Validation;
 using GraphZen.QueryEngine.Validation;
 using JetBrains.Annotations;
 
+namespace GraphZen.Tests.Validation.Rules;
 
-namespace GraphZen.Tests.Validation.Rules
+[NoReorder]
+public class NoFragmentCyclesTests : ValidationRuleHarness
 {
-    [NoReorder]
-    public class NoFragmentCyclesTests : ValidationRuleHarness
-    {
-        public override ValidationRule RuleUnderTest { get; } = QueryValidationRules.NoFragmentCycles;
-    }
+    public override ValidationRule RuleUnderTest { get; } = QueryValidationRules.NoFragmentCycles;
 }

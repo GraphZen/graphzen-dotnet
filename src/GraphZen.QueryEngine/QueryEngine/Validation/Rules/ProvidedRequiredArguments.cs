@@ -5,12 +5,11 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.QueryEngine.Validation.Rules
+namespace GraphZen.QueryEngine.Validation.Rules;
+
+public class ProvidedRequiredArguments : QueryValidationRuleVisitor
 {
-    public class ProvidedRequiredArguments : QueryValidationRuleVisitor
+    public ProvidedRequiredArguments(QueryValidationContext context) : base(context)
     {
-        public ProvidedRequiredArguments(QueryValidationContext context) : base(context)
-        {
-        }
     }
 }

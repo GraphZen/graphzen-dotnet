@@ -3,32 +3,34 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using GraphZen.Infrastructure;
 using JetBrains.Annotations;
+using Xunit;
+using Xunit.Sdk;
 
-namespace GraphZen.Infrastructure
+namespace GraphZen.Infrastructure;
+
+public static class StringAssert
 {
-    public static class StringAssert
+    public static void Equal(string? actual, string expected, StringDiffOptions? options)
     {
-        public static void Equal(string? actual, string expected, StringDiffOptions? options)
-        {
-            if (actual == null) throw new Xunit.Sdk.XunitException($"Expected \"{expected}\", but actual was null.");
-            var diff = actual.GetDiff(expected, options);
-            if (diff != null) throw new Xunit.Sdk.XunitException(diff);
-        }
+        if (actual == null) throw new XunitException($"Expected \"{expected}\", but actual was null.");
+        var diff = actual.GetDiff(expected, options);
+        if (diff != null) throw new XunitException(diff);
+    }
 
-        public static void Equal(string? actual, string expected,
-            Action<StringDiffOptions>? comparisonOptionsAction)
-        {
-            var options = StringDiffOptions.FromOptionsAction(comparisonOptionsAction);
-            Equal(actual, expected, options);
-        }
+    public static void Equal(string? actual, string expected,
+        Action<StringDiffOptions>? comparisonOptionsAction)
+    {
+        var options = StringDiffOptions.FromOptionsAction(comparisonOptionsAction);
+        Equal(actual, expected, options);
+    }
 
-        public static void Equal(string? actual, string expected, bool showDiff)
-        {
-            if (showDiff)
-                Equal(actual, expected, (Action<StringDiffOptions>?)null);
-            else
-                Xunit.Assert.Equal(expected, actual);
-        }
+    public static void Equal(string? actual, string expected, bool showDiff)
+    {
+        if (showDiff)
+            Equal(actual, expected, (Action<StringDiffOptions>?)null);
+        else
+            Assert.Equal(expected, actual);
     }
 }

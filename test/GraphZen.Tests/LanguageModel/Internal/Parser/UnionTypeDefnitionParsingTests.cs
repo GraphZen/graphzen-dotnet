@@ -7,36 +7,33 @@ using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 using Xunit;
 
+namespace GraphZen.Tests.LanguageModel.Internal.Parser;
 
-
-namespace GraphZen.Tests.LanguageModel.Internal.Parser
+public class UnionTypeDefnitionParsingTests : ParserTestBase
 {
-    public class UnionTypeDefnitionParsingTests : ParserTestBase
+    [Fact]
+    public void SimpleUnion()
     {
-        [Fact]
-        public void SimpleUnion()
-        {
-            var result = ParseDocument("union Feed = Story | Article | Advert");
-            var expected = SyntaxFactory.Document(new UnionTypeDefinitionSyntax(SyntaxFactory.Name("Feed"), null, null,
-                new[]
-                {
-                    SyntaxFactory.NamedType(SyntaxFactory.Name("Story")),
-                    SyntaxFactory.NamedType(SyntaxFactory.Name("Article")),
-                    SyntaxFactory.NamedType(SyntaxFactory.Name("Advert"))
-                }));
+        var result = ParseDocument("union Feed = Story | Article | Advert");
+        var expected = SyntaxFactory.Document(new UnionTypeDefinitionSyntax(SyntaxFactory.Name("Feed"), null, null,
+            new[]
+            {
+                SyntaxFactory.NamedType(SyntaxFactory.Name("Story")),
+                SyntaxFactory.NamedType(SyntaxFactory.Name("Article")),
+                SyntaxFactory.NamedType(SyntaxFactory.Name("Advert"))
+            }));
 
-            Assert.Equal(expected, result);
-            Assert.Equal(expected, PrintAndParse(result));
-        }
+        Assert.Equal(expected, result);
+        Assert.Equal(expected, PrintAndParse(result));
+    }
 
-        [Fact]
-        public void UndefinedUnion()
-        {
-            var result = ParseDocument("union UndefinedUnion");
-            var expected =
-                SyntaxFactory.Document(SyntaxFactory.UnionTypeDefinition(SyntaxFactory.Name("UndefinedUnion")));
-            Assert.Equal(expected, result);
-            Assert.Equal(expected, PrintAndParse(result));
-        }
+    [Fact]
+    public void UndefinedUnion()
+    {
+        var result = ParseDocument("union UndefinedUnion");
+        var expected =
+            SyntaxFactory.Document(SyntaxFactory.UnionTypeDefinition(SyntaxFactory.Name("UndefinedUnion")));
+        Assert.Equal(expected, result);
+        Assert.Equal(expected, PrintAndParse(result));
     }
 }

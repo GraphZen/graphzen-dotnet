@@ -5,9 +5,8 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.Infrastructure
+namespace GraphZen.Infrastructure;
+
+public class EnumerableTestExtensionsTests
 {
-    public class EnumerableTestExtensionsTests
-    {
-    }
 }

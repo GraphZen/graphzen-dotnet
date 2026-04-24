@@ -6,61 +6,59 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Tests.Configuration.Objects.Interfaces
+namespace GraphZen.TypeSystem.Tests.Configuration.Objects.Interfaces;
+
+// ReSharper disable once InconsistentNaming
+public class Object_Interfaces_ViaClrInterfaces : Object_Interfaces, ICollectionConventionConfigurationFixture
 {
-    // ReSharper disable once InconsistentNaming
-    public class Object_Interfaces_ViaClrInterfaces : Object_Interfaces, ICollectionConventionConfigurationFixture
+    public const string DataAnnotationName = nameof(DataAnnotationName);
+
+
+    public CollectionConventionContext GetContext() =>
+        new()
+        {
+            ParentName = nameof(ObjectWithInterfaces),
+            ItemNamedByConvention = nameof(INamedByConvention),
+            ItemNamedByDataAnnotation = DataAnnotationName,
+            ItemIgnoredByConvention = nameof(IIgnoredByConvention),
+            ItemIgnoredByDataAnnotation = nameof(IIgnoredByDataAnnotation)
+        };
+
+    public void ConfigureContextConventionally(SchemaBuilder sb)
     {
-        public class Query
-        {
-            public ObjectWithInterfaces? ObjectWithInterfaces { get; set; }
-        }
+        sb.Object<Query>();
+    }
 
-        public class ObjectWithInterfaces : INamedByConvention, INamedByDataAnnotation, IIgnoredByDataAnnotation
-        {
-        }
+    public void ConfigureClrContext(SchemaBuilder sb, string parentName)
+    {
+        sb.Object<ObjectWithInterfaces>();
+    }
 
-        public interface INamedByConvention
-        {
-        }
+    public class Query
+    {
+        public ObjectWithInterfaces? ObjectWithInterfaces { get; set; }
+    }
 
+    public class ObjectWithInterfaces : INamedByConvention, INamedByDataAnnotation, IIgnoredByDataAnnotation
+    {
+    }
 
-        [GraphQLName(DataAnnotationName)]
-        public interface INamedByDataAnnotation
-        {
-        }
-
-        public interface IIgnoredByConvention
-        {
-        }
-
-        [GraphQLIgnore]
-        public interface IIgnoredByDataAnnotation
-        {
-        }
+    public interface INamedByConvention
+    {
+    }
 
 
-        public const string DataAnnotationName = nameof(DataAnnotationName);
+    [GraphQLName(DataAnnotationName)]
+    public interface INamedByDataAnnotation
+    {
+    }
 
+    public interface IIgnoredByConvention
+    {
+    }
 
-        public CollectionConventionContext GetContext() =>
-            new CollectionConventionContext
-            {
-                ParentName = nameof(ObjectWithInterfaces),
-                ItemNamedByConvention = nameof(INamedByConvention),
-                ItemNamedByDataAnnotation = DataAnnotationName,
-                ItemIgnoredByConvention = nameof(IIgnoredByConvention),
-                ItemIgnoredByDataAnnotation = nameof(IIgnoredByDataAnnotation)
-            };
-
-        public void ConfigureContextConventionally(SchemaBuilder sb)
-        {
-            sb.Object<Query>();
-        }
-
-        public void ConfigureClrContext(SchemaBuilder sb, string parentName)
-        {
-            sb.Object<ObjectWithInterfaces>();
-        }
+    [GraphQLIgnore]
+    public interface IIgnoredByDataAnnotation
+    {
     }
 }

@@ -9,52 +9,51 @@ using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Xunit;
 
+namespace GraphZen.Tests.QueryEngine;
 
-namespace GraphZen.Tests.QueryEngine
+[NoReorder]
+public class DirectivesTests : ExecutorHarness
 {
-    [NoReorder]
-    public class DirectivesTests : ExecutorHarness
+    [SuppressMessage("ReSharper", "UnusedMember.Local")]
+    private class Data
     {
-        [SuppressMessage("ReSharper", "UnusedMember.Local")]
-        private class Data
-        {
-            public string A() => "a";
+        public string A() => "a";
 
-            public string B() => "b";
-        }
+        public string B() => "b";
+    }
 
-        public static Schema Schema = Schema.Create(_ =>
-        {
-            _.Object("TestType").Field("a", "String").Field("b", "String");
-            _.QueryType("TestType");
-        });
+    public static Schema Schema = Schema.Create(_ =>
+    {
+        _.Object("TestType").Field("a", "String").Field("b", "String");
+        _.QueryType("TestType");
+    });
 
-        private Task<ExecutionResult> ExecuteAsync(string query) => ExecuteAsync(Schema, query, new Data());
+    private Task<ExecutionResult> ExecuteAsync(string query) => ExecuteAsync(Schema, query, new Data());
 
 
-        [Fact]
-        public Task WorksWithoutDirectives() =>
-            ExecuteAsync("{ a, b }").ShouldEqual(new { data = new { a = "a", b = "b" } });
+    [Fact]
+    public Task WorksWithoutDirectives() =>
+        ExecuteAsync("{ a, b }").ShouldEqual(new { data = new { a = "a", b = "b" } });
 
-        [Fact]
-        public Task IfTrueIncludesScalar() => ExecuteAsync("{ a, b @include(if: true) }")
-            .ShouldEqual(new { data = new { a = "a", b = "b" } });
+    [Fact]
+    public Task IfTrueIncludesScalar() => ExecuteAsync("{ a, b @include(if: true) }")
+        .ShouldEqual(new { data = new { a = "a", b = "b" } });
 
-        [Fact]
-        public Task IfFalseOmitsScalar() =>
-            ExecuteAsync("{ a, b @include(if: false) }").ShouldEqual(new { data = new { a = "a" } });
+    [Fact]
+    public Task IfFalseOmitsScalar() =>
+        ExecuteAsync("{ a, b @include(if: false) }").ShouldEqual(new { data = new { a = "a" } });
 
-        [Fact]
-        public Task UnlessFalseIncludesScalar() => ExecuteAsync("{ a, b @skip(if: false) }")
-            .ShouldEqual(new { data = new { a = "a", b = "b" } });
+    [Fact]
+    public Task UnlessFalseIncludesScalar() => ExecuteAsync("{ a, b @skip(if: false) }")
+        .ShouldEqual(new { data = new { a = "a", b = "b" } });
 
-        [Fact]
-        public Task UnlessTrueOmitsScalar() =>
-            ExecuteAsync("{ a, b @skip(if: true) }").ShouldEqual(new { data = new { a = "a" } });
+    [Fact]
+    public Task UnlessTrueOmitsScalar() =>
+        ExecuteAsync("{ a, b @skip(if: true) }").ShouldEqual(new { data = new { a = "a" } });
 
-        [Fact]
-        public Task IfFalseOmitsFragmentSpread() =>
-            ExecuteAsync(@"
+    [Fact]
+    public Task IfFalseOmitsFragmentSpread() =>
+        ExecuteAsync(@"
         query {
           a
           ...Frag @include(if: false)
@@ -64,9 +63,9 @@ namespace GraphZen.Tests.QueryEngine
         }
         ").ShouldEqual(new { data = new { a = "a" } });
 
-        [Fact]
-        public Task IfTrueIncludesFragmentSpread() =>
-            ExecuteAsync(@"
+    [Fact]
+    public Task IfTrueIncludesFragmentSpread() =>
+        ExecuteAsync(@"
         query {
           a
           ...Frag @include(if: true)
@@ -76,9 +75,9 @@ namespace GraphZen.Tests.QueryEngine
         }
         ").ShouldEqual(new { data = new { a = "a", b = "b" } });
 
-        [Fact]
-        public Task UnlessFalseIncludesFragmentSpread() =>
-            ExecuteAsync(@"
+    [Fact]
+    public Task UnlessFalseIncludesFragmentSpread() =>
+        ExecuteAsync(@"
         query {
           a
           ...Frag @skip(if: false)
@@ -88,9 +87,9 @@ namespace GraphZen.Tests.QueryEngine
         }
         ").ShouldEqual(new { data = new { a = "a", b = "b" } });
 
-        [Fact]
-        public Task UnlessTrueOmitsFragmentSpread() =>
-            ExecuteAsync(@"
+    [Fact]
+    public Task UnlessTrueOmitsFragmentSpread() =>
+        ExecuteAsync(@"
         query {
           a
           ...Frag @skip(if: true)
@@ -100,9 +99,9 @@ namespace GraphZen.Tests.QueryEngine
         }
         ").ShouldEqual(new { data = new { a = "a" } });
 
-        [Fact]
-        public Task IfFalseOmitsInlineFragment() =>
-            ExecuteAsync(@"
+    [Fact]
+    public Task IfFalseOmitsInlineFragment() =>
+        ExecuteAsync(@"
         query {
           a
           ... on TestType @include(if: false) {
@@ -111,9 +110,9 @@ namespace GraphZen.Tests.QueryEngine
         }
         ").ShouldEqual(new { data = new { a = "a" } });
 
-        [Fact]
-        public Task IfTrueIncludesInlineFragment() =>
-            ExecuteAsync(@"
+    [Fact]
+    public Task IfTrueIncludesInlineFragment() =>
+        ExecuteAsync(@"
         query {
           a
           ... on TestType @include(if: true) {
@@ -123,9 +122,9 @@ namespace GraphZen.Tests.QueryEngine
         ").ShouldEqual(new { data = new { a = "a", b = "b" } });
 
 
-        [Fact]
-        public Task UnlessFalseIncludesInlineFragment() =>
-            ExecuteAsync(@"
+    [Fact]
+    public Task UnlessFalseIncludesInlineFragment() =>
+        ExecuteAsync(@"
         query {
           a
           ... on TestType @skip(if: false) {
@@ -134,9 +133,9 @@ namespace GraphZen.Tests.QueryEngine
         }
         ").ShouldEqual(new { data = new { a = "a", b = "b" } });
 
-        [Fact]
-        public Task UnlessTrueIncludesInlineFragment() =>
-            ExecuteAsync(@"
+    [Fact]
+    public Task UnlessTrueIncludesInlineFragment() =>
+        ExecuteAsync(@"
         query {
           a
           ... on TestType @skip(if: true) {
@@ -145,11 +144,11 @@ namespace GraphZen.Tests.QueryEngine
         }
         ").ShouldEqual(new { data = new { a = "a" } });
 
-        //
+    //
 
-        [Fact]
-        public Task IfFalseOmitsAnonymousInlineFragment() =>
-            ExecuteAsync(@"
+    [Fact]
+    public Task IfFalseOmitsAnonymousInlineFragment() =>
+        ExecuteAsync(@"
         query {
           a
           ... @include(if: false) {
@@ -158,9 +157,9 @@ namespace GraphZen.Tests.QueryEngine
         }
         ").ShouldEqual(new { data = new { a = "a" } });
 
-        [Fact]
-        public Task IfTrueIncludesAnonymousInlineFragment() =>
-            ExecuteAsync(@"
+    [Fact]
+    public Task IfTrueIncludesAnonymousInlineFragment() =>
+        ExecuteAsync(@"
         query {
           a
           ... @include(if: true) {
@@ -170,9 +169,9 @@ namespace GraphZen.Tests.QueryEngine
         ").ShouldEqual(new { data = new { a = "a", b = "b" } });
 
 
-        [Fact]
-        public Task UnlessFalseIncludesAnonymousInlineFragment() =>
-            ExecuteAsync(@"
+    [Fact]
+    public Task UnlessFalseIncludesAnonymousInlineFragment() =>
+        ExecuteAsync(@"
         query {
           a
           ... @skip(if: false) {
@@ -181,9 +180,9 @@ namespace GraphZen.Tests.QueryEngine
         }
         ").ShouldEqual(new { data = new { a = "a", b = "b" } });
 
-        [Fact]
-        public Task UnlessTrueIncludesAnonymousInlineFragment() =>
-            ExecuteAsync(@"
+    [Fact]
+    public Task UnlessTrueIncludesAnonymousInlineFragment() =>
+        ExecuteAsync(@"
         query {
           a
           ...  @skip(if: true) {
@@ -192,31 +191,30 @@ namespace GraphZen.Tests.QueryEngine
         }
         ").ShouldEqual(new { data = new { a = "a" } });
 
-        [Fact]
-        public Task IncludeAndNoSkip() =>
-            ExecuteAsync(@"
+    [Fact]
+    public Task IncludeAndNoSkip() =>
+        ExecuteAsync(@"
         {
           a
           b @include(if: true) @skip(if: false)
         }
         ").ShouldEqual(new { data = new { a = "a", b = "b" } });
 
-        [Fact]
-        public Task IncludeAndSkip() =>
-            ExecuteAsync(@"
+    [Fact]
+    public Task IncludeAndSkip() =>
+        ExecuteAsync(@"
         {
           a
           b @include(if: true) @skip(if: true)
         }
         ").ShouldEqual(new { data = new { a = "a" } });
 
-        [Fact]
-        public Task NoIncludeOrSkip() =>
-            ExecuteAsync(@"
+    [Fact]
+    public Task NoIncludeOrSkip() =>
+        ExecuteAsync(@"
         {
           a
           b @include(if: false) @skip(if: false)
         }
         ").ShouldEqual(new { data = new { a = "a" } });
-    }
 }

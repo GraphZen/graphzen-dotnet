@@ -6,65 +6,62 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.LanguageModel;
 
-
-namespace GraphZen.LanguageModel
+/// <summary>
+///     Object field
+///     http://facebook.github.io/graphql/June2018/#ObjectField
+/// </summary>
+public partial class ObjectFieldSyntax : SyntaxNode
 {
-    /// <summary>
-    ///     Object field
-    ///     http://facebook.github.io/graphql/June2018/#ObjectField
-    /// </summary>
-    public partial class ObjectFieldSyntax : SyntaxNode
+    public ObjectFieldSyntax(NameSyntax name, ValueSyntax value, SyntaxLocation? location = null) :
+        base(location)
     {
-        public ObjectFieldSyntax(NameSyntax name, ValueSyntax value, SyntaxLocation? location = null) :
-            base(location)
+        Name = Check.NotNull(name, nameof(name));
+        Value = Check.NotNull(value, nameof(value));
+    }
+
+
+    /// <summary>
+    ///     The name of the field.
+    /// </summary>
+
+    public NameSyntax Name { get; }
+
+
+    /// <summary>
+    ///     The value of the field.
+    /// </summary>
+
+    public ValueSyntax Value { get; }
+
+
+    public override IEnumerable<SyntaxNode> Children
+    {
+        get
         {
-            Name = Check.NotNull(name, nameof(name));
-            Value = Check.NotNull(value, nameof(value));
+            yield return Name;
+            yield return Value;
         }
+    }
 
 
-        /// <summary>
-        ///     The name of the field.
-        /// </summary>
+    private bool Equals(ObjectFieldSyntax other) => Name.Equals(other.Name) && Value.Equals(other.Value);
 
-        public NameSyntax Name { get; }
+    public override bool Equals(object? obj)
+    {
+        if (ReferenceEquals(null, obj)) return false;
 
+        if (ReferenceEquals(this, obj)) return true;
 
-        /// <summary>
-        ///     The value of the field.
-        /// </summary>
+        return obj is ObjectFieldSyntax && Equals((ObjectFieldSyntax)obj);
+    }
 
-        public ValueSyntax Value { get; }
-
-
-        public override IEnumerable<SyntaxNode> Children
+    public override int GetHashCode()
+    {
+        unchecked
         {
-            get
-            {
-                yield return Name;
-                yield return Value;
-            }
-        }
-
-
-        private bool Equals(ObjectFieldSyntax other) => Name.Equals(other.Name) && Value.Equals(other.Value);
-
-        public override bool Equals(object? obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-
-            if (ReferenceEquals(this, obj)) return true;
-
-            return obj is ObjectFieldSyntax && Equals((ObjectFieldSyntax)obj);
-        }
-
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                return (Name.GetHashCode() * 397) ^ Value.GetHashCode();
-            }
+            return (Name.GetHashCode() * 397) ^ Value.GetHashCode();
         }
     }
 }

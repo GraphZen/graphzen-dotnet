@@ -30,6 +30,17 @@ Key patterns:
 
 - **Superpower** (parsing library) - Local clone at `~/Code/datalust/superpower` (upstream: https://github.com/datalust/superpower). Used by `GraphZen.LanguageModel` for GraphQL parsing.
 
+## ReSharper CLI (`dotnet jb`)
+
+Inspection excludes (e.g. `TestResults/`) are configured in `GraphZen.sln.DotSettings`. Cleanup requires `--exclude` (not supported via `.DotSettings`).
+
+- **Inspect:** `dotnet jb inspectcode GraphZen.sln -f Text --stdout`
+- **Inspect (warnings+):** `dotnet jb inspectcode GraphZen.sln -e WARNING -f Text --stdout`
+- **Inspect single project:** `dotnet jb inspectcode GraphZen.sln --project "GraphZen.TypeSystem" -f Text --stdout`
+- **Cleanup:** `dotnet jb cleanupcode GraphZen.sln --exclude="**/TestResults/**"`
+- **Cleanup scoped:** `dotnet jb cleanupcode GraphZen.sln --include "src/GraphZen.TypeSystem/**/*.cs"`
+- **Reformat only:** `dotnet jb cleanupcode GraphZen.sln --exclude="**/TestResults/**" --profile "Built-in: Reformat Code"`
+
 ## Code Style
 
 Nullable enabled, warnings as errors, latest C# language version.

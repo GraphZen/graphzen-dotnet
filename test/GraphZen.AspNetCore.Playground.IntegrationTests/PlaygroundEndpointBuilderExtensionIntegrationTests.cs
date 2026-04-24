@@ -15,134 +15,133 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Xunit;
 
-namespace GraphZen.AspNetCore.Playground.IntegrationTests
+namespace GraphZen.AspNetCore.Playground.IntegrationTests;
+
+[NoReorder]
+public class PlaygroundEndpointBuilderExtensionIntegrationTests
 {
-    [NoReorder]
-    public class PlaygroundEndpointBuilderExtensionIntegrationTests
+    private static Action<PlaygroundOptions> ConfigureOptions { get; } = options =>
     {
-        private static Action<PlaygroundOptions> ConfigureOptions { get; } = options =>
-        {
-            options.Endpoint = "customViaAction";
-        };
+        options.Endpoint = "customViaAction";
+    };
 
-        private static PlaygroundOptions CustomOptions { get; } = new PlaygroundOptions { Endpoint = "custom" };
+    private static PlaygroundOptions CustomOptions { get; } = new() { Endpoint = "custom" };
 
-        public class DefaultMappingStartup
+    public class DefaultMappingStartup
+    {
+        public void Configure(IApplicationBuilder app)
         {
-            public void Configure(IApplicationBuilder app)
-            {
-                app.UseRouting();
-                app.UseEndpoints(endpoints => { endpoints.MapGraphQLPlayground(); });
-            }
+            app.UseRouting();
+            app.UseEndpoints(endpoints => { endpoints.MapGraphQLPlayground(); });
         }
-
-        [Fact]
-        public async Task default_map_to_root_path()
-        {
-            var client = CreateAppClient<DefaultMappingStartup>();
-            var result = await client.GetStringAsync("/");
-            var expectedHtml = PlaygroundHtmlWriter.GetHtml();
-            Assert.Equal(expectedHtml, result);
-        }
-
-        public class CustomPathStartup
-        {
-            public void Configure(IApplicationBuilder app)
-            {
-                app.UseRouting();
-                app.UseEndpoints(endpoints => { endpoints.MapGraphQLPlayground("/foo"); });
-            }
-        }
-
-        [Fact]
-        public async Task it_should_map_to_custom_path()
-        {
-            var client = CreateAppClient<CustomPathStartup>();
-            var result = await client.GetStringAsync("/foo");
-            var expectedHtml = PlaygroundHtmlWriter.GetHtml();
-            Assert.Equal(expectedHtml, result);
-        }
-
-
-        public class CustomOptionsStartup
-        {
-            public void Configure(IApplicationBuilder app)
-            {
-                app.UseRouting();
-                app.UseEndpoints(endpoints => { endpoints.MapGraphQLPlayground(CustomOptions); });
-            }
-        }
-
-        [Fact]
-        public async Task it_should_render_custom_options()
-        {
-            var client = CreateAppClient<CustomOptionsStartup>();
-            var result = await client.GetStringAsync("/");
-            var expectedHtml = PlaygroundHtmlWriter.GetHtml(CustomOptions);
-            Assert.Equal(expectedHtml, result);
-        }
-
-        public class CustomOptionsAndPathStartup
-        {
-            public void Configure(IApplicationBuilder app)
-            {
-                app.UseRouting();
-                app.UseEndpoints(endpoints => { endpoints.MapGraphQLPlayground("/foo", CustomOptions); });
-            }
-        }
-
-        [Fact]
-        public async Task it_should_render_custom_options_on_custom_path()
-        {
-            var client = CreateAppClient<CustomOptionsAndPathStartup>();
-            var result = await client.GetStringAsync("/foo");
-            var expectedHtml = PlaygroundHtmlWriter.GetHtml(CustomOptions);
-            Assert.Equal(expectedHtml, result);
-        }
-
-        public class CustomOptionsActionStartup
-        {
-            public void Configure(IApplicationBuilder app)
-            {
-                app.UseRouting();
-                app.UseEndpoints(endpoints => { endpoints.MapGraphQLPlayground(ConfigureOptions); });
-            }
-        }
-
-        [Fact]
-        public async Task it_should_render_custom_options_configured_via_action_on_default_path()
-        {
-            var client = CreateAppClient<CustomOptionsActionStartup>();
-            var result = await client.GetStringAsync("/");
-            var expectedOptions = new PlaygroundOptions();
-            ConfigureOptions(expectedOptions);
-            var expectedHtml = PlaygroundHtmlWriter.GetHtml(expectedOptions);
-            Assert.Equal(expectedHtml, result);
-        }
-
-        public class CustomOptionsActionAndPathStartup
-        {
-            public void Configure(IApplicationBuilder app)
-            {
-                app.UseRouting();
-                app.UseEndpoints(endpoints => { endpoints.MapGraphQLPlayground("/foo", ConfigureOptions); });
-            }
-        }
-
-        [Fact]
-        public async Task it_should_render_custom_options_configured_via_action_on_custom_path()
-        {
-            var client = CreateAppClient<CustomOptionsActionAndPathStartup>();
-            var result = await client.GetStringAsync("/foo");
-            var expectedOptions = new PlaygroundOptions();
-            ConfigureOptions(expectedOptions);
-            var expectedHtml = PlaygroundHtmlWriter.GetHtml(expectedOptions);
-            Assert.Equal(expectedHtml, result);
-        }
-
-        private static HttpClient CreateAppClient<T>() where T : class =>
-#pragma warning disable ASPDEPR008
-            new TestServer(WebHost.CreateDefaultBuilder().UseStartup<T>()).CreateClient();
-#pragma warning restore ASPDEPR008
     }
+
+    [Fact]
+    public async Task default_map_to_root_path()
+    {
+        var client = CreateAppClient<DefaultMappingStartup>();
+        var result = await client.GetStringAsync("/");
+        var expectedHtml = PlaygroundHtmlWriter.GetHtml();
+        Assert.Equal(expectedHtml, result);
+    }
+
+    public class CustomPathStartup
+    {
+        public void Configure(IApplicationBuilder app)
+        {
+            app.UseRouting();
+            app.UseEndpoints(endpoints => { endpoints.MapGraphQLPlayground("/foo"); });
+        }
+    }
+
+    [Fact]
+    public async Task it_should_map_to_custom_path()
+    {
+        var client = CreateAppClient<CustomPathStartup>();
+        var result = await client.GetStringAsync("/foo");
+        var expectedHtml = PlaygroundHtmlWriter.GetHtml();
+        Assert.Equal(expectedHtml, result);
+    }
+
+
+    public class CustomOptionsStartup
+    {
+        public void Configure(IApplicationBuilder app)
+        {
+            app.UseRouting();
+            app.UseEndpoints(endpoints => { endpoints.MapGraphQLPlayground(CustomOptions); });
+        }
+    }
+
+    [Fact]
+    public async Task it_should_render_custom_options()
+    {
+        var client = CreateAppClient<CustomOptionsStartup>();
+        var result = await client.GetStringAsync("/");
+        var expectedHtml = PlaygroundHtmlWriter.GetHtml(CustomOptions);
+        Assert.Equal(expectedHtml, result);
+    }
+
+    public class CustomOptionsAndPathStartup
+    {
+        public void Configure(IApplicationBuilder app)
+        {
+            app.UseRouting();
+            app.UseEndpoints(endpoints => { endpoints.MapGraphQLPlayground("/foo", CustomOptions); });
+        }
+    }
+
+    [Fact]
+    public async Task it_should_render_custom_options_on_custom_path()
+    {
+        var client = CreateAppClient<CustomOptionsAndPathStartup>();
+        var result = await client.GetStringAsync("/foo");
+        var expectedHtml = PlaygroundHtmlWriter.GetHtml(CustomOptions);
+        Assert.Equal(expectedHtml, result);
+    }
+
+    public class CustomOptionsActionStartup
+    {
+        public void Configure(IApplicationBuilder app)
+        {
+            app.UseRouting();
+            app.UseEndpoints(endpoints => { endpoints.MapGraphQLPlayground(ConfigureOptions); });
+        }
+    }
+
+    [Fact]
+    public async Task it_should_render_custom_options_configured_via_action_on_default_path()
+    {
+        var client = CreateAppClient<CustomOptionsActionStartup>();
+        var result = await client.GetStringAsync("/");
+        var expectedOptions = new PlaygroundOptions();
+        ConfigureOptions(expectedOptions);
+        var expectedHtml = PlaygroundHtmlWriter.GetHtml(expectedOptions);
+        Assert.Equal(expectedHtml, result);
+    }
+
+    public class CustomOptionsActionAndPathStartup
+    {
+        public void Configure(IApplicationBuilder app)
+        {
+            app.UseRouting();
+            app.UseEndpoints(endpoints => { endpoints.MapGraphQLPlayground("/foo", ConfigureOptions); });
+        }
+    }
+
+    [Fact]
+    public async Task it_should_render_custom_options_configured_via_action_on_custom_path()
+    {
+        var client = CreateAppClient<CustomOptionsActionAndPathStartup>();
+        var result = await client.GetStringAsync("/foo");
+        var expectedOptions = new PlaygroundOptions();
+        ConfigureOptions(expectedOptions);
+        var expectedHtml = PlaygroundHtmlWriter.GetHtml(expectedOptions);
+        Assert.Equal(expectedHtml, result);
+    }
+
+    private static HttpClient CreateAppClient<T>() where T : class =>
+#pragma warning disable ASPDEPR008
+        new TestServer(WebHost.CreateDefaultBuilder().UseStartup<T>()).CreateClient();
+#pragma warning restore ASPDEPR008
 }

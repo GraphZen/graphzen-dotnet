@@ -14,35 +14,34 @@ using JetBrains.Annotations;
 // ReSharper disable UnusedMember.Local
 // ReSharper disable UnassignedGetOnlyAutoProperty
 
-namespace GraphZen.Tests.QueryEngine.Variables
+namespace GraphZen.Tests.QueryEngine.Variables;
+
+public abstract class VariablesTests
 {
-    public abstract class VariablesTests
+    private static EnumType TestEnum { get; } = null!;
+    private static ScalarType TestComplexScalar { get; } = null!;
+    private static InputObjectType TestInputObject { get; } = null!;
+    private static InputObjectType TestNestedInputObject { get; } = null!;
+    private static ObjectType TestType { get; } = null!;
+    protected static Schema StaticDslSchema { get; } = null!;
+
+    public abstract Schema Schema { get; }
+
+    public static Schema SchemaBuilderSchema => GraphQLContext.Schema;
+
+
+    public static VariablesTestsGraphQLContext GraphQLContext => new();
+
+    public static object[] Array(params object?[] values) => values!;
+
+
+    protected Task<ExecutionResult> ExecuteAsync(string gql, dynamic? variableValues = null)
     {
-        private static EnumType TestEnum { get; } = null!;
-        private static ScalarType TestComplexScalar { get; } = null!;
-        private static InputObjectType TestInputObject { get; } = null!;
-        private static InputObjectType TestNestedInputObject { get; } = null!;
-        private static ObjectType TestType { get; } = null!;
-        protected static Schema StaticDslSchema { get; } = null!;
+        var varValues = variableValues != null
+            ? TestHelpers.ToDictionary(variableValues)
+            : new Dictionary<string, object>();
 
-        public abstract Schema Schema { get; }
-
-        public static Schema SchemaBuilderSchema => GraphQLContext.Schema;
-
-
-        public static VariablesTestsGraphQLContext GraphQLContext => new VariablesTestsGraphQLContext();
-
-        public static object[] Array(params object?[] values) => values!;
-
-
-        protected Task<ExecutionResult> ExecuteAsync(string gql, dynamic? variableValues = null)
-        {
-            var varValues = variableValues != null
-                ? TestHelpers.ToDictionary(variableValues)
-                : new Dictionary<string, object>();
-
-            var doc = Parser.ParseDocument(gql);
-            return ExecutionFunctions.ExecuteAsync(Schema, doc, null, null, varValues);
-        }
+        var doc = Parser.ParseDocument(gql);
+        return ExecutionFunctions.ExecuteAsync(Schema, doc, null, null, varValues);
     }
 }

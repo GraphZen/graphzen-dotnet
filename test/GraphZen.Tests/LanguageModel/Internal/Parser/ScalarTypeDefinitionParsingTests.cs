@@ -7,31 +7,28 @@ using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 using Xunit;
 
+namespace GraphZen.Tests.LanguageModel.Internal.Parser;
 
-
-namespace GraphZen.Tests.LanguageModel.Internal.Parser
+public class ScalarTypeDefinitionParsingTests : ParserTestBase
 {
-    public class ScalarTypeDefinitionParsingTests : ParserTestBase
+    [Fact]
+    public void AnnotatedScalar()
     {
-        [Fact]
-        public void AnnotatedScalar()
-        {
-            var result = ParseDocument("scalar AnnotatedScalar @onScalar");
-            var expected =
-                SyntaxFactory.Document(new ScalarTypeDefinitionSyntax(SyntaxFactory.Name("AnnotatedScalar"), null,
-                    new[] { SyntaxFactory.Directive(SyntaxFactory.Name("onScalar")) }));
-            Assert.Equal(expected, result);
-            Assert.Equal(expected, PrintAndParse(result));
-        }
+        var result = ParseDocument("scalar AnnotatedScalar @onScalar");
+        var expected =
+            SyntaxFactory.Document(new ScalarTypeDefinitionSyntax(SyntaxFactory.Name("AnnotatedScalar"), null,
+                new[] { SyntaxFactory.Directive(SyntaxFactory.Name("onScalar")) }));
+        Assert.Equal(expected, result);
+        Assert.Equal(expected, PrintAndParse(result));
+    }
 
-        [Fact]
-        public void SimpleScalar()
-        {
-            var result = ParseDocument("scalar CustomScalar");
-            var expected =
-                SyntaxFactory.Document(SyntaxFactory.ScalarTypeDefinition(SyntaxFactory.Name("CustomScalar")));
-            Assert.Equal(expected, result);
-            Assert.Equal(expected, PrintAndParse(result));
-        }
+    [Fact]
+    public void SimpleScalar()
+    {
+        var result = ParseDocument("scalar CustomScalar");
+        var expected =
+            SyntaxFactory.Document(SyntaxFactory.ScalarTypeDefinition(SyntaxFactory.Name("CustomScalar")));
+        Assert.Equal(expected, result);
+        Assert.Equal(expected, PrintAndParse(result));
     }
 }

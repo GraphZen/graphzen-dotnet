@@ -6,11 +6,10 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
+namespace GraphZen.TypeSystem.Taxonomy;
+
+public interface IMutableValueParserDefinition : IValueParserDefinition
 {
-    public interface IMutableValueParserDefinition : IValueParserDefinition
-    {
-        ConfigurationSource? GetValueParserConfigurationSource();
-        bool SetValueParser(LeafValueParser<object>? valueParser, ConfigurationSource configurationSource);
-    }
+    ConfigurationSource? GetValueParserConfigurationSource();
+    bool SetValueParser(LeafValueParser<object>? valueParser, ConfigurationSource configurationSource);
 }

@@ -9,19 +9,17 @@ using JetBrains.Annotations;
 using Superpower;
 using Xunit;
 
+namespace GraphZen.Tests.LanguageModel.Internal.Parser;
 
-
-namespace GraphZen.Tests.LanguageModel.Internal.Parser
+public class SelectionSetParserTests
 {
-    public class SelectionSetParserTests
+    private readonly Tokenizer<TokenKind> _sut = SuperPowerTokenizer.Instance;
+
+
+    [Fact]
+    public void SelectionSetWithAllSelectionTypes()
     {
-        private readonly Tokenizer<TokenKind> _sut = SuperPowerTokenizer.Instance;
-
-
-        [Fact]
-        public void SelectionSetWithAllSelectionTypes()
-        {
-            var source = @"
+        var source = @"
 {
     foo
     ...barFields,
@@ -34,50 +32,49 @@ namespace GraphZen.Tests.LanguageModel.Internal.Parser
 }
 ";
 
-            var tokens = _sut.Tokenize(source);
-            var testResult = Grammar.SelectionSet(tokens);
-            var expectedResultValue = SyntaxFactory.SelectionSet(
-                SyntaxFactory.Field(SyntaxFactory.Name("foo")),
-                SyntaxFactory.FragmentSpread(SyntaxFactory.Name("barFields")),
-                new InlineFragmentSyntax(SyntaxFactory.SelectionSet(SyntaxFactory.Field(SyntaxFactory.Name("baz"))),
-                    SyntaxFactory.NamedType(SyntaxFactory.Name("User"))),
-                new FieldSyntax(SyntaxFactory.Name("address"),
-                    SyntaxFactory.SelectionSet(SyntaxFactory.Field(SyntaxFactory.Name("line1"))))
-            );
-            Assert.Equal(expectedResultValue, testResult.Value);
-        }
+        var tokens = _sut.Tokenize(source);
+        var testResult = Grammar.SelectionSet(tokens);
+        var expectedResultValue = SyntaxFactory.SelectionSet(
+            SyntaxFactory.Field(SyntaxFactory.Name("foo")),
+            SyntaxFactory.FragmentSpread(SyntaxFactory.Name("barFields")),
+            new InlineFragmentSyntax(SyntaxFactory.SelectionSet(SyntaxFactory.Field(SyntaxFactory.Name("baz"))),
+                SyntaxFactory.NamedType(SyntaxFactory.Name("User"))),
+            new FieldSyntax(SyntaxFactory.Name("address"),
+                SyntaxFactory.SelectionSet(SyntaxFactory.Field(SyntaxFactory.Name("line1"))))
+        );
+        Assert.Equal(expectedResultValue, testResult.Value);
+    }
 
-        [Fact]
-        public void SelectionSetWithField()
-        {
-            var tokens = _sut.Tokenize("{foo}");
-            var testResult = Grammar.SelectionSet(tokens);
-            var expectedResultValue = SyntaxFactory.SelectionSet(SyntaxFactory.Field(SyntaxFactory.Name("foo")));
-            Assert.Equal(expectedResultValue, testResult.Value);
-        }
+    [Fact]
+    public void SelectionSetWithField()
+    {
+        var tokens = _sut.Tokenize("{foo}");
+        var testResult = Grammar.SelectionSet(tokens);
+        var expectedResultValue = SyntaxFactory.SelectionSet(SyntaxFactory.Field(SyntaxFactory.Name("foo")));
+        Assert.Equal(expectedResultValue, testResult.Value);
+    }
 
-        [Fact]
-        public void SelectionSetWithMultipleFields()
-        {
-            var tokens = _sut.Tokenize("{foo bar}");
-            var testResult = Grammar.SelectionSet(tokens);
-            var expectedResultValue = SyntaxFactory.SelectionSet(
-                SyntaxFactory.Field(SyntaxFactory.Name("foo")),
-                SyntaxFactory.Field(SyntaxFactory.Name("bar"))
-            );
-            Assert.Equal(expectedResultValue, testResult.Value);
-        }
+    [Fact]
+    public void SelectionSetWithMultipleFields()
+    {
+        var tokens = _sut.Tokenize("{foo bar}");
+        var testResult = Grammar.SelectionSet(tokens);
+        var expectedResultValue = SyntaxFactory.SelectionSet(
+            SyntaxFactory.Field(SyntaxFactory.Name("foo")),
+            SyntaxFactory.Field(SyntaxFactory.Name("bar"))
+        );
+        Assert.Equal(expectedResultValue, testResult.Value);
+    }
 
-        [Fact]
-        public void SelectionSetWithMultipleFieldsWithCommas()
-        {
-            var tokens = _sut.Tokenize("{foo,bar}");
-            var testResult = Grammar.SelectionSet(tokens);
-            var expectedResultValue = SyntaxFactory.SelectionSet(
-                SyntaxFactory.Field(SyntaxFactory.Name("foo")),
-                SyntaxFactory.Field(SyntaxFactory.Name("bar"))
-            );
-            Assert.Equal(expectedResultValue, testResult.Value);
-        }
+    [Fact]
+    public void SelectionSetWithMultipleFieldsWithCommas()
+    {
+        var tokens = _sut.Tokenize("{foo,bar}");
+        var testResult = Grammar.SelectionSet(tokens);
+        var expectedResultValue = SyntaxFactory.SelectionSet(
+            SyntaxFactory.Field(SyntaxFactory.Name("foo")),
+            SyntaxFactory.Field(SyntaxFactory.Name("bar"))
+        );
+        Assert.Equal(expectedResultValue, testResult.Value);
     }
 }

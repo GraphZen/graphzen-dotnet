@@ -7,36 +7,35 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Tests.Configuration.Interfaces.Fields.Description
+namespace GraphZen.TypeSystem.Tests.Configuration.Interfaces.Fields.Description;
+
+// ReSharper disable once InconsistentNaming
+public class Interface_Field_ViaClrProperty_Description : Interface_Field_Description,
+    ILeafConventionConfigurationFixture
 {
-    // ReSharper disable once InconsistentNaming
-    public class Interface_Field_ViaClrProperty_Description : Interface_Field_Description,
-        ILeafConventionConfigurationFixture
+    public const string DataAnnotationDescriptionValue = nameof(DataAnnotationDescriptionValue);
+
+    public LeafConventionContext GetContext() =>
+        new()
+        {
+            ParentName = nameof(IExampleInterface.ExampleField).FirstCharToLower(),
+            DataAnnotationValue = DataAnnotationDescriptionValue
+        };
+
+    public void ConfigureContextConventionally(SchemaBuilder sb)
     {
-        [GraphQLName(Grandparent)]
-        public interface IExampleInterface
-        {
-            [Description(DataAnnotationDescriptionValue)]
-            string ExampleField { get; set; }
-        }
+        sb.Interface<IExampleInterface>();
+    }
 
-        public const string DataAnnotationDescriptionValue = nameof(DataAnnotationDescriptionValue);
+    public void ConfigureClrContext(SchemaBuilder sb, string parentName)
+    {
+        sb.Interface<IExampleInterface>();
+    }
 
-        public LeafConventionContext GetContext() =>
-            new LeafConventionContext
-            {
-                ParentName = nameof(IExampleInterface.ExampleField).FirstCharToLower(),
-                DataAnnotationValue = DataAnnotationDescriptionValue
-            };
-
-        public void ConfigureContextConventionally(SchemaBuilder sb)
-        {
-            sb.Interface<IExampleInterface>();
-        }
-
-        public void ConfigureClrContext(SchemaBuilder sb, string parentName)
-        {
-            sb.Interface<IExampleInterface>();
-        }
+    [GraphQLName(Grandparent)]
+    public interface IExampleInterface
+    {
+        [Description(DataAnnotationDescriptionValue)]
+        string ExampleField { get; set; }
     }
 }

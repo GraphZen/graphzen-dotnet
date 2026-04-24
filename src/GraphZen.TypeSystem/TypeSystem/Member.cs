@@ -7,14 +7,13 @@ using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem
-{
-    [GraphQLIgnore]
-    public abstract class Member : ISyntaxConvertable
-    {
-        [GraphQLCanBeNull] public abstract string? Description { get; }
+namespace GraphZen.TypeSystem;
 
-        [GraphQLIgnore]
-        public abstract SyntaxNode ToSyntaxNode();
-    }
+[GraphQLIgnore]
+public abstract class Member : ISyntaxConvertable
+{
+    [GraphQLCanBeNull] public abstract string? Description { get; }
+
+    [GraphQLIgnore]
+    public abstract SyntaxNode ToSyntaxNode();
 }

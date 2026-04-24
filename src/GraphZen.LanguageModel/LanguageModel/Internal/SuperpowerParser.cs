@@ -7,38 +7,35 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Superpower;
 
+namespace GraphZen.LanguageModel.Internal;
 
-
-namespace GraphZen.LanguageModel.Internal
+public class SuperpowerParser : IParser
 {
-    public class SuperpowerParser : IParser
+    public DocumentSyntax ParseDocument(string document) =>
+        Parse(Check.NotNull(document, nameof(document)), Grammar.Document);
+
+    public ValueSyntax ParseValue(string value) =>
+        Parse(Check.NotNull(value, nameof(value)), Grammar.Value);
+
+    public TypeSyntax ParseType(string type) => Parse(Check.NotNull(type, nameof(type)), Grammar.Type);
+
+
+    private static T Parse<T>(string text, TokenListParser<TokenKind, T> parser)
     {
-        public DocumentSyntax ParseDocument(string document) =>
-            Parse(Check.NotNull(document, nameof(document)), Grammar.Document);
-
-        public ValueSyntax ParseValue(string value) =>
-            Parse(Check.NotNull(value, nameof(value)), Grammar.Value);
-
-        public TypeSyntax ParseType(string type) => Parse(Check.NotNull(type, nameof(type)), Grammar.Type);
+        var source = new Source(text);
 
 
-        private static T Parse<T>(string text, TokenListParser<TokenKind, T> parser)
+        var tokens = SuperPowerTokenizer.Instance.Tokenize(source.Body);
+        Debug.Assert(parser != null, nameof(parser) + " != null");
+        var result = parser(tokens);
+        if (!result.HasValue)
         {
-            var source = new Source(text);
-
-
-            var tokens = SuperPowerTokenizer.Instance.Tokenize(source.Body);
-            Debug.Assert(parser != null, nameof(parser) + " != null");
-            var result = parser(tokens);
-            if (!result.HasValue)
-            {
-                var error = new GraphQLServerError(result.ToString()!, null, source,
-                    new[] { result.ErrorPosition.Absolute });
-                error.Throw();
-            }
-
-            Debug.Assert(result.Value != null);
-            return result.Value;
+            var error = new GraphQLServerError(result.ToString()!, null, source,
+                new[] { result.ErrorPosition.Absolute });
+            error.Throw();
         }
+
+        Debug.Assert(result.Value != null);
+        return result.Value;
     }
 }

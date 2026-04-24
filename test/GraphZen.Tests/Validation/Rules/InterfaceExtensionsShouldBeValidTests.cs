@@ -7,19 +7,18 @@ using GraphZen.LanguageModel.Validation;
 using JetBrains.Annotations;
 using Xunit;
 
+namespace GraphZen.Tests.Validation.Rules;
 
-namespace GraphZen.Tests.Validation.Rules
+[NoReorder]
+public class InterfaceExtensionsShouldBeValidTests : ValidationRuleHarness
 {
-    [NoReorder]
-    public class InterfaceExtensionsShouldBeValidTests : ValidationRuleHarness
-    {
-        public override ValidationRule RuleUnderTest { get; } =
-            DocumentValidationRules.InterfaceExtensionsShouldBeValid;
+    public override ValidationRule RuleUnderTest { get; } =
+        DocumentValidationRules.InterfaceExtensionsShouldBeValid;
 
-        [Fact]
-        public void RejectsAnObjectImplementingTheExtendedInterfaceDueToMissingField()
-        {
-            SdlShouldFail(@"
+    [Fact]
+    public void RejectsAnObjectImplementingTheExtendedInterfaceDueToMissingField()
+    {
+        SdlShouldFail(@"
               type Query {
                 test: AnotherObject
               }
@@ -39,15 +38,15 @@ namespace GraphZen.Tests.Validation.Rules
                 differentNewField: String
               }
             ",
-                Error("Interface field AnotherInterface.newField expected but AnotherObject does not provide it.",
-                    (9, 6),
-                    (13, 3), (16, 13)));
-        }
+            Error("Interface field AnotherInterface.newField expected but AnotherObject does not provide it.",
+                (9, 6),
+                (13, 3), (16, 13)));
+    }
 
-        [Fact]
-        public void RejectsAnObjectImplementedTheExtendedInterfaceDueToMissingFieldArgs()
-        {
-            SdlShouldFail(@"
+    [Fact]
+    public void RejectsAnObjectImplementedTheExtendedInterfaceDueToMissingFieldArgs()
+    {
+        SdlShouldFail(@"
               type Query {
                 test: AnotherObject
               }
@@ -68,15 +67,15 @@ namespace GraphZen.Tests.Validation.Rules
                 newField: String
               }
             ",
-                Error(
-                    "Interface field argument AnotherInterface.newField(test:) expected but AnotherObject.newField does not provide it.",
-                    (14, 12), (18, 3)));
-        }
+            Error(
+                "Interface field argument AnotherInterface.newField(test:) expected but AnotherObject.newField does not provide it.",
+                (14, 12), (18, 3)));
+    }
 
-        [Fact]
-        public void RejectsObjectsImplementingTheExtendedInterfaceDueToMismatchingInterfaceType()
-        {
-            SdlShouldFail(@"
+    [Fact]
+    public void RejectsObjectsImplementingTheExtendedInterfaceDueToMismatchingInterfaceType()
+    {
+        SdlShouldFail(@"
               type Query {
                 test: AnotherObject
               }
@@ -110,9 +109,8 @@ namespace GraphZen.Tests.Validation.Rules
                 newField: String
               }
             ",
-                Error(
-                    "Interface field AnotherInterface.newInterfaceField expects type NewInterface but AnotherObject.newInterfaceField is type MismatchingInterface.",
-                    (14, 22), (26, 22)));
-        }
+            Error(
+                "Interface field AnotherInterface.newInterfaceField expects type NewInterface but AnotherObject.newInterfaceField is type MismatchingInterface.",
+                (14, 22), (26, 22)));
     }
 }

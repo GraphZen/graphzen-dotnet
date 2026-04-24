@@ -8,82 +8,81 @@ using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace GraphZen.Infrastructure
+namespace GraphZen.Infrastructure;
+
+public class CoreOptionsExtension : IGraphQLContextOptionsExtension
 {
-    public class CoreOptionsExtension : IGraphQLContextOptionsExtension
+    public CoreOptionsExtension()
     {
-        public ISchema? Schema { get; private set; }
-        public Type? QueryClrType { get; private set; }
-        public Type? MutationClrType { get; private set; }
-        public IServiceProvider? ApplicationServiceProvider { get; private set; }
-        public IServiceProvider? InternalServiceProvider { get; private set; }
-        public bool RevealInternalServerErrors { get; private set; }
+    }
 
-        public CoreOptionsExtension()
-        {
-        }
+    protected CoreOptionsExtension(CoreOptionsExtension copyFrom)
+    {
+        Schema = copyFrom.Schema;
+        QueryClrType = copyFrom.QueryClrType;
+        MutationClrType = copyFrom.MutationClrType;
+        ApplicationServiceProvider = copyFrom.ApplicationServiceProvider;
+        InternalServiceProvider = copyFrom.InternalServiceProvider;
+        RevealInternalServerErrors = copyFrom.RevealInternalServerErrors;
+    }
 
-        protected CoreOptionsExtension(CoreOptionsExtension copyFrom)
-        {
-            Schema = copyFrom.Schema;
-            QueryClrType = copyFrom.QueryClrType;
-            MutationClrType = copyFrom.MutationClrType;
-            ApplicationServiceProvider = copyFrom.ApplicationServiceProvider;
-            InternalServiceProvider = copyFrom.InternalServiceProvider;
-            RevealInternalServerErrors = copyFrom.RevealInternalServerErrors;
-        }
+    public ISchema? Schema { get; private set; }
+    public Type? QueryClrType { get; private set; }
+    public Type? MutationClrType { get; private set; }
+    public IServiceProvider? ApplicationServiceProvider { get; private set; }
+    public IServiceProvider? InternalServiceProvider { get; private set; }
+    public bool RevealInternalServerErrors { get; private set; }
 
-        protected CoreOptionsExtension Clone() => new CoreOptionsExtension(this);
+    public void ApplyServices(IServiceCollection services)
+    {
+    }
 
-        public void ApplyServices(IServiceCollection services)
-        {
-        }
+    public void Validate(IGraphQLContextOptions options)
+    {
+    }
 
-        public void Validate(IGraphQLContextOptions options)
-        {
-        }
+    protected CoreOptionsExtension Clone() => new(this);
 
-        public CoreOptionsExtension WithSchema(ISchema schema)
-        {
-            var clone = Clone();
-            clone.Schema = schema;
-            return clone;
-        }
+    public CoreOptionsExtension WithSchema(ISchema schema)
+    {
+        var clone = Clone();
+        clone.Schema = schema;
+        return clone;
+    }
 
-        public CoreOptionsExtension WithQueryClrType(Type clrType)
-        {
-            var clone = Clone();
-            clone.QueryClrType = clrType;
-            return clone;
-        }
+    public CoreOptionsExtension WithQueryClrType(Type clrType)
+    {
+        var clone = Clone();
+        clone.QueryClrType = clrType;
+        return clone;
+    }
 
-        public CoreOptionsExtension WithMutationClrType(Type clrType)
-        {
-            var clone = Clone();
-            clone.MutationClrType = clrType;
-            return clone;
-        }
+    public CoreOptionsExtension WithMutationClrType(Type clrType)
+    {
+        var clone = Clone();
+        clone.MutationClrType = clrType;
+        return clone;
+    }
 
-        public CoreOptionsExtension WithRevealInternalServerErrors(bool value)
-        {
-            var clone = Clone();
-            clone.RevealInternalServerErrors = value;
-            return clone;
-        }
+    public CoreOptionsExtension WithRevealInternalServerErrors(bool value)
+    {
+        var clone = Clone();
+        clone.RevealInternalServerErrors = value;
+        return clone;
+    }
 
 
-        public CoreOptionsExtension WithApplicationServiceProvider(IServiceProvider serviceProvider)
-        {
-            var clone = Clone();
-            clone.ApplicationServiceProvider = serviceProvider;
-            return clone;
-        }
+    public CoreOptionsExtension WithApplicationServiceProvider(IServiceProvider serviceProvider)
+    {
+        var clone = Clone();
+        clone.ApplicationServiceProvider = serviceProvider;
+        return clone;
+    }
 
-        public CoreOptionsExtension WithInternalServiceProvider(IServiceProvider serviceProvider)
-        {
-            var clone = Clone();
-            clone.InternalServiceProvider = serviceProvider;
-            return clone;
-        }
+    public CoreOptionsExtension WithInternalServiceProvider(IServiceProvider serviceProvider)
+    {
+        var clone = Clone();
+        clone.InternalServiceProvider = serviceProvider;
+        return clone;
     }
 }
