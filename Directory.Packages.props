@@ -10,7 +10,7 @@
     <PackageVersion Include="Superpower" Version="3.1.0" />
     <PackageVersion Include="System.CommandLine.Experimental" Version="0.3.0-alpha.19317.1" />
     <!-- Build infrastructure -->
-    <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="10.0.102" />
+    <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="10.0.203" />
     <!-- Test dependencies -->
     <PackageVersion Include="CompareNETObjects" Version="4.84.0" />
     <PackageVersion Include="coverlet.collector" Version="10.0.0" />
