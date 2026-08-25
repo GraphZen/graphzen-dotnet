@@ -1,0 +1,25 @@
+{
+  "$schema": "https://axm.sh/schemas/skill.schema.json",
+  "owner": "@agentxm",
+  "type": "skill",
+  "name": "axm",
+  "version": "0.27.18",
+  "description": "Broad, bounded extension management for canonical packages, workspace state, agent projections, composition, installation, distribution, and lifecycle",
+  "keywords": [
+    "agent-extensions",
+    "skills",
+    "subagents",
+    "mcp",
+    "rules",
+    "hooks",
+    "knowledge",
+    "packs"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/agentxm/axm",
+    "directory": "skills/axm"
+  },
+  "homepage": "https://axm.sh",
+  "license": "FSL-1.1-MIT"
+}

@@ -1,0 +1,14 @@
+{
+  "agents": [
+    "amp",
+    "antigravity",
+    "claude-code",
+    "codex",
+    "cursor",
+    "gemini-cli",
+    "github-copilot-cli"
+  ],
+  "skills": {
+    "axm": "agentxm:@agentxm/skills/axm"
+  }
+}

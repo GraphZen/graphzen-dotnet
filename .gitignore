@@ -272,3 +272,12 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/.axm/
+*.axm-staging/
+*.axm-backup/
+# axm:start v=1 region=instruction-aliases ext=@agentxm/instructions/aliases
+/CLAUDE.md
+/GEMINI.md
+/test/GraphZen.SpecConformance.Tests/CLAUDE.md
+/test/GraphZen.SpecConformance.Tests/GEMINI.md
+# axm:end v=1 region=instruction-aliases

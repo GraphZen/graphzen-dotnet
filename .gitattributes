@@ -2,3 +2,4 @@
 
 *.cs text diff=csharp
 *.sh text eol=lf
+/agent_extensions/** -text -whitespace

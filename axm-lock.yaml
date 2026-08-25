@@ -1,0 +1,16 @@
+lockfileVersion: 6
+skills:
+  axm:
+    type: registry
+    sourceType: registry
+    endpoint: https://registry.agentxm.ai/
+    extensionType: skill
+    workspaceName: axm
+    packageFormat: agentxm
+    owner: "@agentxm"
+    name: axm
+    resolvedVersion: 0.27.18
+    integrity: sha512-kIRKqj9B4CxohLrnXISU9tchSmqr45g2UIHyMnrFXMQ0qdjWzNGha20cdJ9EFpBK1XeGz19B6xcF71gC1hSx/w==
+    sourceName: agentxm
+    publisherBindingId: hbnd_01ks5vvdf0efz9m4w5qsv4q5qp
+    treeIntegrity: sha256-tree-v1:bf47919dc27fadde2cd8d2b330b7682f11983bca4eca7193694f030cad0db829
