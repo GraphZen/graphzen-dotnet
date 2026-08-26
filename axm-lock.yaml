@@ -9,8 +9,8 @@ skills:
     packageFormat: agentxm
     owner: "@agentxm"
     name: axm
-    resolvedVersion: 0.27.18
-    integrity: sha512-kIRKqj9B4CxohLrnXISU9tchSmqr45g2UIHyMnrFXMQ0qdjWzNGha20cdJ9EFpBK1XeGz19B6xcF71gC1hSx/w==
+    resolvedVersion: 0.28.1
+    integrity: sha512-Zqxtj4U8WGGZ6aKAcZ77K6JICbwVSLfqym3CoUL1Ygxzze8bdaIbaLG2Fbv1seqNb9uKGZ/LCHexNVqoXWWccQ==
     sourceName: agentxm
     publisherBindingId: hbnd_01ks5vvdf0efz9m4w5qsv4q5qp
-    treeIntegrity: sha256-tree-v1:bf47919dc27fadde2cd8d2b330b7682f11983bca4eca7193694f030cad0db829
+    treeIntegrity: sha256-tree-v1:10bcaa35d8d554da2930c4e4978a5d9608dbef5ae84d2297aeb03c684e5ba257
